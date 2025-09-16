@@ -2,41 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Aurex and Fields Real Estate - Luxury Design System */
 
 @layer base {
   :root {
+    /* Sophisticated Real Estate Color Palette */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 222 84% 4.9%;
 
+    /* Luxury navy primary */
+    --primary: 222 47% 11%;
+    --primary-foreground: 210 40% 98%;
+    --primary-muted: 222 25% 25%;
+
+    /* Elegant gold accent */
+    --accent: 43 100% 68%;
+    --accent-foreground: 222 47% 11%;
+    --accent-muted: 43 50% 85%;
+
+    /* Sophisticated secondary grays */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 30% 20%;
+    
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Card and surface colors */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 84% 4.9%;
+    --card-glass: 0 0% 100% / 0.1;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Interactive elements */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 43 100% 68%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Design system tokens */
+    --radius: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
 
-    --radius: 0.5rem;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-muted)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-muted)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-muted)) 50%, hsl(var(--accent)) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(var(--card-glass)) 0%, hsl(0 0% 100% / 0.05) 100%);
+
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -5px hsl(var(--primary) / 0.1);
+    --shadow-luxury: 0 20px 60px -10px hsl(var(--primary) / 0.15);
+    --shadow-gold: 0 8px 25px -5px hsl(var(--accent) / 0.3);
+
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,33 +81,39 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222 47% 11%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222 30% 15%;
     --card-foreground: 210 40% 98%;
+    --card-glass: 0 0% 0% / 0.2;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222 30% 15%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-foreground: 222 47% 11%;
+    --primary-muted: 222 25% 80%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 222 30% 18%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 222 30% 18%;
+    --muted-foreground: 220 9% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 43 100% 68%;
+    --accent-foreground: 222 47% 11%;
+    --accent-muted: 43 50% 25%;
 
-    --destructive: 0 62.8% 30.6%;
+    --border: 222 30% 20%;
+    --input: 222 30% 20%;
+    --ring: 43 100% 68%;
+
+    --destructive: 0 62% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--primary-muted) / 0.1) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(var(--card-glass)) 0%, hsl(0 0% 0% / 0.1) 100%);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -99,7 +130,106 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  /* Parallax utilities */
+  .parallax-container {
+    @apply relative overflow-hidden;
+  }
+
+  .parallax-element {
+    @apply absolute inset-0 will-change-transform;
+  }
+
+  /* Glass morphism */
+  .glass {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border) / 0.2);
+  }
+
+  /* Luxury button variants */
+  .btn-luxury {
+    @apply relative px-8 py-4 rounded-full overflow-hidden;
+    background: var(--gradient-accent);
+    color: hsl(var(--accent-foreground));
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .btn-luxury:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-luxury);
+  }
+
+  .btn-luxury::before {
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    content: '';
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+  }
+
+  .btn-luxury:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Elegant text effects */
+  .text-gradient {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Animation utilities */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+}
+
+@layer utilities {
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px hsl(var(--primary) / 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

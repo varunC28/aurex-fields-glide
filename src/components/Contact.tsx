@@ -1,0 +1,153 @@
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+
+const contactInfo = [
+  {
+    icon: Phone,
+    title: 'Phone',
+    details: '+1 (555) 123-4567',
+    subtitle: 'Mon-Fri 9AM-7PM',
+  },
+  {
+    icon: Mail,
+    title: 'Email',
+    details: 'hello@aurexfields.com',
+    subtitle: 'We respond within 24h',
+  },
+  {
+    icon: MapPin,
+    title: 'Office',
+    details: '432 Park Avenue, NYC',
+    subtitle: 'Manhattan Headquarters',
+  },
+  {
+    icon: Clock,
+    title: 'Hours',
+    details: 'Mon-Fri 9AM-7PM',
+    subtitle: 'Sat 10AM-4PM',
+  },
+];
+
+const Contact = () => {
+  return (
+    <section id="contact" className="py-24">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16 animate-slide-up">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+            Get In <span className="text-gradient">Touch</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Ready to elevate your real estate experience? Let's discuss how we can 
+            help you achieve your luxury property goals.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div>
+            <h3 className="font-serif text-2xl font-semibold mb-8 text-foreground">
+              Contact Information
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+              {contactInfo.map((item, index) => (
+                <Card key={index} className="glass border-border/20 hover:shadow-elegant transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-10 h-10 bg-gradient-accent rounded-full flex items-center justify-center flex-shrink-0">
+                        <item.icon className="w-5 h-5 text-accent-foreground" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-1">
+                          {item.title}
+                        </h4>
+                        <p className="text-foreground font-medium mb-1">
+                          {item.details}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <Card className="glass border-border/20">
+            <CardContent className="p-8">
+              <h3 className="font-serif text-2xl font-semibold mb-6 text-foreground">
+                Send Us a Message
+              </h3>
+              
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      First Name
+                    </label>
+                    <Input 
+                      placeholder="John" 
+                      className="glass border-border/30"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Last Name
+                    </label>
+                    <Input 
+                      placeholder="Doe" 
+                      className="glass border-border/30"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Email Address
+                  </label>
+                  <Input 
+                    type="email" 
+                    placeholder="john@example.com"
+                    className="glass border-border/30"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Phone Number
+                  </label>
+                  <Input 
+                    type="tel" 
+                    placeholder="+1 (555) 123-4567"
+                    className="glass border-border/30"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Message
+                  </label>
+                  <Textarea 
+                    placeholder="Tell us about your real estate needs..."
+                    rows={5}
+                    className="glass border-border/30"
+                  />
+                </div>
+                
+                <Button size="lg" className="w-full btn-luxury">
+                  Send Message
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Contact;

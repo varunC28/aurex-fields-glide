@@ -22,6 +22,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          muted: "hsl(var(--primary-muted))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -38,6 +39,7 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          muted: "hsl(var(--accent-muted))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -46,6 +48,7 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          glass: "hsl(var(--card-glass))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -59,9 +62,29 @@ export default {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
+        lg: "var(--radius-lg)",
+        md: "var(--radius)",
         sm: "calc(var(--radius) - 4px)",
+        xl: "var(--radius-xl)",
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+      },
+      backgroundImage: {
+        'gradient-primary': 'var(--gradient-primary)',
+        'gradient-accent': 'var(--gradient-accent)',
+        'gradient-hero': 'var(--gradient-hero)',
+        'gradient-glass': 'var(--gradient-glass)',
+      },
+      boxShadow: {
+        elegant: 'var(--shadow-elegant)',
+        luxury: 'var(--shadow-luxury)',
+        gold: 'var(--shadow-gold)',
+      },
+      transitionTimingFunction: {
+        smooth: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        bounce: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
       },
       keyframes: {
         "accordion-down": {
