@@ -1,5 +1,6 @@
 import { Home, TrendingUp, Users, Award } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useParallax, useScrollReveal } from '@/hooks/useParallax';
 
 const services = [
   {
@@ -25,12 +26,24 @@ const services = [
 ];
 
 const Services = () => {
+  const backgroundRef = useParallax(0.3);
+  const titleRef = useScrollReveal();
+  
   return (
-    <section id="services" className="py-24 bg-secondary/30">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16 animate-slide-up">
+    <section id="services" className="relative py-24 bg-secondary/30 overflow-hidden">
+      {/* Parallax background elements */}
+      <div 
+        ref={backgroundRef as any}
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 20% 50%, hsl(var(--accent)) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsl(var(--primary)) 0%, transparent 50%)',
+        }}
+      />
+      
+      <div className="container mx-auto px-6 relative z-10">
+        <div ref={titleRef as any} className="text-center mb-16 scroll-reveal">
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Our <span className="text-gradient">Expertise</span>
+            Our <span className="text-gradient animate-pulse-slow">Expertise</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             We combine innovative marketing strategies with deep market knowledge 
@@ -39,24 +52,29 @@ const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
-            <Card 
-              key={index} 
-              className="group glass hover:shadow-luxury transition-all duration-300 hover:-translate-y-2 border-border/20"
-            >
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-gradient-accent rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                  <service.icon className="w-8 h-8 text-accent-foreground" />
-                </div>
-                <h3 className="font-serif text-xl font-semibold mb-4 text-foreground">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          {services.map((service, index) => {
+            const cardRef = useScrollReveal();
+            return (
+              <Card 
+                key={index}
+                ref={cardRef as any}
+                className={`group glass hover:shadow-luxury transition-all duration-500 hover:-translate-y-4 hover:rotate-1 border-border/20 scroll-reveal-scale animate-sway`}
+                style={{ animationDelay: `${index * 2}s` }}
+              >
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 bg-gradient-accent rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">
+                    <service.icon className="w-8 h-8 text-accent-foreground transition-transform" />
+                  </div>
+                  <h3 className="font-serif text-xl font-semibold mb-4 text-foreground group-hover:text-gradient transition-all">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>
