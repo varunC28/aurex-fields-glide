@@ -3,7 +3,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
-import { useParallax, useScrollReveal } from '@/hooks/useParallax';
+import { useParallaxBackground, useParallaxContent, useParallaxHorizontal } from '@/hooks/useSimpleParallax';
+import { useScrollReveal } from '@/hooks/useParallax';
 import officeLobby from '@/assets/office-lobby.jpg';
 
 const contactInfo = [
@@ -34,38 +35,37 @@ const contactInfo = [
 ];
 
 const Contact = () => {
-  const backgroundRef = useParallax(0.3);
-  const imageRef = useParallax(0.15);
+  const backgroundRef = useParallaxBackground(1.2);
+  const overlayRef = useParallaxContent('up', 0.6);
+  const floatingLeftRef = useParallaxHorizontal('left', 1.08);
+  const floatingRightRef = useParallaxHorizontal('right', 1.08);
   const titleRef = useScrollReveal();
   const formRef = useScrollReveal();
   
   return (
     <section id="contact" className="relative py-24 overflow-hidden">
       {/* Parallax office lobby background */}
-      <div 
-        ref={imageRef as any}
-        className="absolute inset-0 opacity-12"
-        style={{
-          backgroundImage: `url(${officeLobby})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
+      <img
+        ref={backgroundRef as any}
+        src={officeLobby}
+        alt="Office Lobby"
+        className="absolute inset-0 w-full h-full object-cover opacity-12"
       />
       
       {/* Parallax gradient overlay */}
       <div 
-        ref={backgroundRef as any}
+        ref={overlayRef as any}
         className="absolute inset-0 opacity-15"
         style={{
           background: 'linear-gradient(60deg, hsl(var(--accent)) 0%, transparent 40%, hsl(var(--primary)) 60%, transparent 100%)',
         }}
       />
       
-      {/* Floating elements */}
-      <div className="absolute top-16 left-10 animate-drift opacity-20">
+      {/* Floating elements with parallax */}
+      <div ref={floatingLeftRef as any} className="absolute top-16 left-10 opacity-20">
         <Send className="w-8 h-8 text-accent" />
       </div>
-      <div className="absolute bottom-20 right-16 animate-float opacity-25">
+      <div ref={floatingRightRef as any} className="absolute bottom-20 right-16 opacity-25">
         <Mail className="w-6 h-6 text-primary" />
       </div>
       

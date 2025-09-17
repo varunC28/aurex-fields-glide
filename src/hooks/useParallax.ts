@@ -1,24 +1,45 @@
 import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const useParallax = (speed: number = 0.5) => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * speed;
-        
-        // Only apply transform when element is in viewport
-        if (rect.bottom >= 0 && rect.top <= window.innerHeight) {
-          ref.current.style.transform = `translateY(${rate}px)`;
-        }
-      }
-    };
+    if (!ref.current) return;
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const element = ref.current;
+    
+    // Use GSAP's ScrollTrigger for smooth parallax
+    const parallaxTween = gsap.to(element, {
+      yPercent: -50 * speed,
+      ease: "none",
+      scrollTrigger: {
+        trigger: element,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+      }
+    });
+
+    // Optimize for performance
+    gsap.set(element, {
+      willChange: "transform",
+      backfaceVisibility: "hidden",
+      perspective: 1000,
+    });
+
+    return () => {
+      parallaxTween.kill();
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.trigger === element) {
+          trigger.kill();
+        }
+      });
+    };
   }, [speed]);
 
   return ref;

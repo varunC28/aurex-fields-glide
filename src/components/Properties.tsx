@@ -6,7 +6,8 @@ import luxuryInterior from '@/assets/luxury-interior.jpg';
 import modernHome from '@/assets/modern-home.jpg';
 import penthouseView from '@/assets/penthouse-view.jpg';
 import villaExterior from '@/assets/villa-exterior.jpg';
-import { useParallax, useScrollReveal } from '@/hooks/useParallax';
+import { useParallaxContent, useParallaxImage, useParallaxHorizontal } from '@/hooks/useSimpleParallax';
+import { useScrollReveal } from '@/hooks/useParallax';
 
 const properties = [
   {
@@ -56,16 +57,18 @@ const properties = [
 ];
 
 const Properties = () => {
-  const backgroundRef = useParallax(0.2);
+  const backgroundRef = useParallaxContent('down', 0.4);
+  const floatingLeftRef = useParallaxHorizontal('left', 1.05);
+  const floatingRightRef = useParallaxHorizontal('right', 1.05);
   const titleRef = useScrollReveal();
   
   return (
     <section id="properties" className="relative py-24 overflow-hidden">
-      {/* Floating decorative elements */}
-      <div className="absolute top-10 right-10 animate-drift opacity-20">
+      {/* Floating decorative elements with parallax */}
+      <div ref={floatingRightRef as any} className="absolute top-10 right-10 opacity-20">
         <Star className="w-8 h-8 text-accent" />
       </div>
-      <div className="absolute bottom-20 left-10 animate-float opacity-30">
+      <div ref={floatingLeftRef as any} className="absolute bottom-20 left-10 opacity-30">
         <Star className="w-6 h-6 text-accent" />
       </div>
       
@@ -92,7 +95,7 @@ const Properties = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {properties.map((property, index) => {
             const cardRef = useScrollReveal();
-            const imageParallax = useParallax(0.1);
+            const imageParallax = useParallaxImage(1.15);
             
             return (
               <Card 
@@ -101,14 +104,11 @@ const Properties = () => {
                 className={`group overflow-hidden glass hover:shadow-luxury transition-all duration-700 hover:-translate-y-3 hover:rotate-1 border-border/20 scroll-reveal ${index % 2 === 0 ? 'scroll-reveal-left' : 'scroll-reveal-right'}`}
               >
                 <div className="relative overflow-hidden h-80">
-                  <div
+                  <img
                     ref={imageParallax as any}
-                    className="w-full h-full"
-                    style={{
-                      backgroundImage: `url(${property.image})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
+                    src={property.image}
+                    alt={property.title}
+                    className="w-full h-full object-cover"
                   />
                   <div className="absolute top-4 left-4 animate-pulse-slow">
                     <Badge className="bg-accent text-accent-foreground font-semibold shadow-gold">
