@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { useParallax, useScrollReveal } from '@/hooks/useParallax';
+import officeLobby from '@/assets/office-lobby.jpg';
 
 const contactInfo = [
   {
@@ -34,17 +35,29 @@ const contactInfo = [
 
 const Contact = () => {
   const backgroundRef = useParallax(0.3);
+  const imageRef = useParallax(0.15);
   const titleRef = useScrollReveal();
   const formRef = useScrollReveal();
   
   return (
     <section id="contact" className="relative py-24 overflow-hidden">
-      {/* Parallax background gradient */}
+      {/* Parallax office lobby background */}
+      <div 
+        ref={imageRef as any}
+        className="absolute inset-0 opacity-12"
+        style={{
+          backgroundImage: `url(${officeLobby})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      
+      {/* Parallax gradient overlay */}
       <div 
         ref={backgroundRef as any}
-        className="absolute inset-0 opacity-5"
+        className="absolute inset-0 opacity-15"
         style={{
-          background: 'linear-gradient(-45deg, hsl(var(--accent)) 0%, transparent 70%)',
+          background: 'linear-gradient(60deg, hsl(var(--accent)) 0%, transparent 40%, hsl(var(--primary)) 60%, transparent 100%)',
         }}
       />
       

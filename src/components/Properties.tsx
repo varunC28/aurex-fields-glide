@@ -4,6 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { MapPin, Bed, Bath, Square, Star } from 'lucide-react';
 import luxuryInterior from '@/assets/luxury-interior.jpg';
 import modernHome from '@/assets/modern-home.jpg';
+import penthouseView from '@/assets/penthouse-view.jpg';
+import villaExterior from '@/assets/villa-exterior.jpg';
 import { useParallax, useScrollReveal } from '@/hooks/useParallax';
 
 const properties = [
@@ -15,7 +17,7 @@ const properties = [
     beds: 4,
     baths: 3,
     sqft: '3,200',
-    image: luxuryInterior,
+    image: penthouseView,
     status: 'Featured',
   },
   {
@@ -26,8 +28,30 @@ const properties = [
     beds: 5,
     baths: 4,
     sqft: '4,800',
-    image: modernHome,
+    image: villaExterior,
     status: 'New Listing',
+  },
+  {
+    id: 3,
+    title: 'Luxury Interior',
+    price: '$6.8M',
+    location: 'Downtown Miami, FL',
+    beds: 3,
+    baths: 3,
+    sqft: '2,800',
+    image: luxuryInterior,
+    status: 'Premium',
+  },
+  {
+    id: 4,
+    title: 'Modern Home',
+    price: '$4.2M',
+    location: 'Austin, TX',
+    beds: 4,
+    baths: 3,
+    sqft: '3,600',
+    image: modernHome,
+    status: 'Available',
   },
 ];
 
@@ -65,7 +89,7 @@ const Properties = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {properties.map((property, index) => {
             const cardRef = useScrollReveal();
             const imageParallax = useParallax(0.1);

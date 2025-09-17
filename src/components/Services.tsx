@@ -1,6 +1,7 @@
 import { Home, TrendingUp, Users, Award } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useParallax, useScrollReveal } from '@/hooks/useParallax';
+import officeInterior from '@/assets/office-interior.jpg';
 
 const services = [
   {
@@ -27,16 +28,28 @@ const services = [
 
 const Services = () => {
   const backgroundRef = useParallax(0.3);
+  const imageRef = useParallax(0.2);
   const titleRef = useScrollReveal();
   
   return (
     <section id="services" className="relative py-24 bg-secondary/30 overflow-hidden">
-      {/* Parallax background elements */}
+      {/* Parallax office background */}
+      <div 
+        ref={imageRef as any}
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `url(${officeInterior})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      
+      {/* Parallax gradient overlay */}
       <div 
         ref={backgroundRef as any}
-        className="absolute inset-0 opacity-5"
+        className="absolute inset-0 opacity-20"
         style={{
-          backgroundImage: 'radial-gradient(circle at 20% 50%, hsl(var(--accent)) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsl(var(--primary)) 0%, transparent 50%)',
+          background: 'linear-gradient(45deg, hsl(var(--primary)) 0%, transparent 30%, hsl(var(--accent)) 70%, transparent 100%)',
         }}
       />
       

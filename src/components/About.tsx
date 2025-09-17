@@ -1,7 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, Award, Target, Zap, TrendingUp } from 'lucide-react';
+import { Users, Award, Target, Zap, TrendingUp, Building } from 'lucide-react';
 import { useParallax, useScrollReveal } from '@/hooks/useParallax';
+import teamMeeting from '@/assets/team-meeting.jpg';
 
 const stats = [
   { icon: Users, value: '500+', label: 'Happy Clients' },
@@ -12,26 +13,38 @@ const stats = [
 
 const About = () => {
   const backgroundRef = useParallax(0.4);
+  const imageRef = useParallax(0.2);
   const contentRef = useScrollReveal();
   const statsRef = useScrollReveal();
   
   return (
     <section id="about" className="relative py-24 bg-secondary/30 overflow-hidden">
-      {/* Parallax background elements */}
+      {/* Parallax team meeting background */}
+      <div 
+        ref={imageRef as any}
+        className="absolute inset-0 opacity-8"
+        style={{
+          backgroundImage: `url(${teamMeeting})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      
+      {/* Parallax gradient overlay */}
       <div 
         ref={backgroundRef as any}
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0 opacity-15"
         style={{
-          backgroundImage: 'radial-gradient(circle at 70% 30%, hsl(var(--primary)) 0%, transparent 50%), radial-gradient(circle at 30% 80%, hsl(var(--accent)) 0%, transparent 50%)',
+          background: 'linear-gradient(135deg, hsl(var(--primary)) 0%, transparent 40%, hsl(var(--accent)) 60%, transparent 100%)',
         }}
       />
       
       {/* Floating decorative elements */}
-      <div className="absolute top-20 right-20 animate-drift opacity-20">
-        <TrendingUp className="w-10 h-10 text-accent" />
+      <div className="absolute top-16 right-16 animate-sway opacity-30">
+        <Building className="w-12 h-12 text-accent" />
       </div>
-      <div className="absolute bottom-32 left-16 animate-sway opacity-30">
-        <Award className="w-8 h-8 text-primary" />
+      <div className="absolute bottom-16 left-16 animate-drift opacity-35">
+        <TrendingUp className="w-10 h-10 text-accent" />
       </div>
       
       <div className="container mx-auto px-6 relative z-10">

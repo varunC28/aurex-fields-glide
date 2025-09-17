@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { useParallax } from '@/hooks/useParallax';
+import apartmentBuilding from '@/assets/apartment-building.jpg';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const headerBgRef = useParallax(0.1);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,11 +17,23 @@ const Header = () => {
 
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-300 overflow-hidden ${
         isScrolled ? 'glass shadow-elegant' : 'bg-transparent'
       }`}
     >
-      <nav className="container mx-auto px-6 py-4">
+      {/* Subtle parallax background for header */}
+      {isScrolled && (
+        <div 
+          ref={headerBgRef as any}
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage: `url(${apartmentBuilding})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      )}
+      <nav className="container mx-auto px-6 py-4 relative z-10">
         <div className="flex items-center justify-between">
           <div className="font-serif text-2xl font-bold text-gradient">
             Aurex & Fields
