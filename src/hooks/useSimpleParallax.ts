@@ -1,5 +1,46 @@
 import { useEffect, useRef } from 'react';
-import SimpleParallax from 'simple-parallax-js';
+import { useGSAPParallax } from './useGSAPParallax';
+
+// Safe import for simple-parallax-js with multiple fallback strategies
+let SimpleParallaxConstructor: any = null;
+let importAttempted = false;
+
+// Initialize the library with comprehensive error handling
+const getSimpleParallax = async () => {
+  if (SimpleParallaxConstructor) return SimpleParallaxConstructor;
+  if (importAttempted) return null; // Don't retry if already failed
+  
+  importAttempted = true;
+  
+  try {
+    // Strategy 1: Try dynamic ES6 import
+    const simpleParallaxModule = await import('simple-parallax-js');
+    
+    // Strategy 2: Handle different export formats
+    const possibleConstructors = [
+      simpleParallaxModule.default,
+      simpleParallaxModule.SimpleParallax,
+      simpleParallaxModule,
+      // @ts-ignore - Try accessing as property
+      simpleParallaxModule['SimpleParallax'],
+    ];
+    
+    for (const constructor of possibleConstructors) {
+      if (typeof constructor === 'function') {
+        SimpleParallaxConstructor = constructor;
+        console.log('SimpleParallax constructor found and verified');
+        return SimpleParallaxConstructor;
+      }
+    }
+    
+    console.warn('SimpleParallax constructor not found in module exports');
+    return null;
+    
+  } catch (error) {
+    console.warn('Failed to load simple-parallax-js, will use GSAP fallback:', error);
+    return null;
+  }
+};
 
 interface SimpleParallaxOptions {
     scale?: number;
@@ -15,7 +56,14 @@ interface SimpleParallaxOptions {
 
 export const useSimpleParallax = (options: SimpleParallaxOptions = {}) => {
     const ref = useRef<HTMLElement>(null);
-    const instanceRef = useRef<SimpleParallax | null>(null);
+    const instanceRef = useRef<any>(null);
+    
+    // Fallback to GSAP parallax if simple-parallax-js fails
+    const gsapFallbackRef = useGSAPParallax({
+        speed: (options.scale || 1.2) - 1,
+        direction: options.orientation === 'down' ? 'down' : 'up',
+        disabled: options.disabled,
+    });
 
     useEffect(() => {
         if (!ref.current) return;
@@ -37,21 +85,47 @@ export const useSimpleParallax = (options: SimpleParallaxOptions = {}) => {
             defaultOptions.disabled = true;
         }
 
-        // Initialize simple-parallax-js
-        try {
-            instanceRef.current = new SimpleParallax(ref.current, defaultOptions);
-        } catch (error) {
-            console.warn('SimpleParallax initialization failed:', error);
-        }
+        // Initialize parallax with safe loading and fallback
+        const initParallax = async () => {
+            try {
+                const ParallaxClass = await getSimpleParallax();
+                
+                if (ParallaxClass && ref.current) {
+                    instanceRef.current = new ParallaxClass(ref.current, defaultOptions);
+                    console.log('SimpleParallax initialized successfully');
+                } else {
+                    console.warn('SimpleParallax not available, using GSAP fallback');
+                    // Use GSAP fallback by copying ref
+                    if (ref.current && gsapFallbackRef.current !== ref.current) {
+                        gsapFallbackRef.current = ref.current;
+                    }
+                }
+            } catch (error) {
+                console.warn('SimpleParallax initialization failed, using GSAP fallback:', error);
+                // Use GSAP fallback
+                if (ref.current && gsapFallbackRef.current !== ref.current) {
+                    gsapFallbackRef.current = ref.current;
+                }
+            }
+        };
+
+        initParallax();
 
         // Cleanup function
         return () => {
-            if (instanceRef.current) {
+            if (instanceRef.current && typeof instanceRef.current.destroy === 'function') {
                 instanceRef.current.destroy();
                 instanceRef.current = null;
             }
         };
     }, [options.scale, options.delay, options.orientation, options.overflow, options.disabled]);
+
+    // Return the ref, but also ensure GSAP fallback can use the same element
+    useEffect(() => {
+        if (ref.current && gsapFallbackRef.current !== ref.current) {
+            gsapFallbackRef.current = ref.current;
+        }
+    }, [gsapFallbackRef]);
 
     return ref;
 };

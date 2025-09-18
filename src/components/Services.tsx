@@ -1,103 +1,370 @@
-import { Award, Home, TrendingUp, Users } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { useParallaxBackground, useParallaxContent } from "@/hooks/useSimpleParallax";
-import { useScrollReveal } from "@/hooks/useParallax";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Autoplay, EffectCards, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { cn } from "@/lib/utils";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-cards";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+// Import images from assets
+import luxuryInterior from "@/assets/luxury-interior.jpg";
+import modernHome from "@/assets/modern-home.jpg";
+import penthouseView from "@/assets/penthouse-view.jpg";
+import villaExterior from "@/assets/villa-exterior.jpg";
+import apartmentBuilding from "@/assets/apartment-building.jpg";
+import heroBuilding from "@/assets/hero-building.jpg";
 import officeInterior from "@/assets/office-interior.jpg";
+import officeLobby from "@/assets/office-lobby.jpg";
+import teamMeeting from "@/assets/team-meeting.jpg";
 
-const services = [
-  {
-    icon: Home,
-    title: "Property Marketing",
-    description:
-      "Strategic marketing campaigns that showcase luxury properties with sophisticated visual storytelling and targeted outreach.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Market Analysis",
-    description:
-      "Data-driven insights and comprehensive market analysis to optimize pricing strategies and investment decisions.",
-  },
-  {
-    icon: Users,
-    title: "Client Relations",
-    description:
-      "Personalized service and relationship management ensuring exceptional experiences for buyers and sellers.",
-  },
-  {
-    icon: Award,
-    title: "Premium Branding",
-    description:
-      "Elevated brand positioning and marketing collateral that reflects the prestige of luxury real estate.",
-  },
-];
+// Interface for image data
+interface ImageData {
+  src: string;
+  alt: string;
+  title?: string;
+  description?: string;
+}
 
-const Services = () => {
-  const backgroundRef = useParallaxBackground(1.2);
-  const overlayRef = useParallaxContent('down', 0.5);
-  const titleRef = useScrollReveal();
+// Interface for Services component props
+interface ServicesProps {
+  images: ImageData[];
+  className?: string;
+  showPagination?: boolean;
+  showNavigation?: boolean;
+  loop?: boolean;
+  autoplay?: boolean;
+  spaceBetween?: number;
+}
+
+const Skiper48 = () => {
+  const textRef = useRef(null);
+  const isInView = useInView(textRef, { once: true, margin: "-100px" });
+
+  const images = [
+    {
+      src: luxuryInterior,
+      alt: "Luxury Interior Design Services",
+      title: "Luxury Interior Design",
+      description:
+        "Transform your space with our premium interior design services. We create sophisticated and elegant living environments that reflect your personal style.",
+    },
+    {
+      src: modernHome,
+      alt: "Modern Home Architecture & Design",
+      title: "Modern Home Architecture",
+      description:
+        "Contemporary architectural solutions that blend functionality with aesthetic appeal. Our designs embrace clean lines and innovative materials.",
+    },
+    {
+      src: penthouseView,
+      alt: "Penthouse Property Management",
+      title: "Penthouse Management",
+      description:
+        "Exclusive property management services for luxury penthouses. We ensure your premium investment receives the attention it deserves.",
+    },
+    {
+      src: villaExterior,
+      alt: "Villa Sales & Marketing Services",
+      title: "Villa Sales & Marketing",
+      description:
+        "Comprehensive marketing strategies for luxury villas. Our expertise helps you reach the right buyers and achieve optimal property values.",
+    },
+    {
+      src: apartmentBuilding,
+      alt: "Apartment Complex Development",
+      title: "Apartment Development",
+      description:
+        "Full-service apartment complex development from concept to completion. We handle every aspect of your residential project.",
+    },
+    {
+      src: heroBuilding,
+      alt: "Hero Building Architecture",
+      title: "Commercial Architecture",
+      description:
+        "Innovative commercial building designs that make a statement. Our architectural solutions enhance your business presence.",
+    },
+    {
+      src: officeInterior,
+      alt: "Office Interior Design",
+      title: "Office Interior Solutions",
+      description:
+        "Professional office interior design that boosts productivity and creates inspiring work environments for your team.",
+    },
+    {
+      src: officeLobby,
+      alt: "Office Lobby Design",
+      title: "Corporate Lobby Design",
+      description:
+        "Impressive lobby designs that create lasting first impressions. We craft welcoming spaces that reflect your company's values.",
+    },
+    {
+      src: teamMeeting,
+      alt: "Team Meeting Space",
+      title: "Collaborative Spaces",
+      description:
+        "Dynamic meeting and collaboration spaces designed to foster creativity and enhance team productivity in modern work environments.",
+    },
+  ];
 
   return (
-    <section
-      id="services"
-      className="relative py-24 bg-secondary/30 overflow-hidden"
-    >
-      {/* Parallax office background */}
-      <img
-        ref={backgroundRef as any}
-        src={officeInterior}
-        alt="Office Interior"
-        className="absolute inset-0 w-full h-full object-cover opacity-10"
-      />
+    <div className="min-h-screen w-full bg-[#f5f4f3] py-8 sm:py-12 lg:py-16 xl:py-20">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Mobile and Tablet Layout (Stack Vertically) */}
+        <div className="flex flex-col lg:hidden space-y-8 sm:space-y-12">
+          {/* Text Section - Mobile First */}
+          <div className="w-full flex flex-col justify-center space-y-6 text-center sm:text-left">
+            <div className="space-y-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+                Our Premium Services
+              </h2>
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto sm:mx-0">
+                Discover our comprehensive range of real estate and design
+                services. From luxury interior design to commercial
+                architecture, we deliver exceptional results that exceed
+                expectations.
+              </p>
+            </div>
 
-      {/* Parallax gradient overlay */}
-      <div
-        ref={overlayRef as any}
-        className="absolute inset-0 opacity-20"
-        style={{
-          background:
-            "linear-gradient(45deg, hsl(var(--primary)) 0%, transparent 30%, hsl(var(--accent)) 70%, transparent 100%)",
-        }}
-      />
+            <div className="space-y-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+                Why Choose Us?
+              </h3>
+              <ul className="space-y-3 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto sm:mx-0">
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0">
+                  </span>
+                  Expert team with 15+ years of experience
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0">
+                  </span>
+                  Personalized approach to every project
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0">
+                  </span>
+                  Premium quality materials and finishes
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0">
+                  </span>
+                  On-time delivery and budget management
+                </li>
+              </ul>
+            </div>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div ref={titleRef as any} className="text-center mb-16 scroll-reveal">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Our{" "}
-            <span className="text-gradient animate-pulse-slow">Expertise</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We combine innovative marketing strategies with deep market
-            knowledge to deliver exceptional results in luxury real estate.
-          </p>
+            <div className="pt-4">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-colors duration-200 text-sm sm:text-base">
+                Get Started Today
+              </button>
+            </div>
+          </div>
+
+          {/* Image Section - Mobile */}
+          <div className="w-full flex items-center justify-center">
+            <Services className="" images={images} loop />
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => {
-            const cardRef = useScrollReveal();
-            return (
-              <Card
-                key={index}
-                ref={cardRef as any}
-                className={`group glass hover:shadow-luxury transition-all duration-500 hover:-translate-y-4 hover:rotate-1 border-border/20 scroll-reveal-scale`}
+        {/* Desktop Layout (Side by Side) */}
+        <div className="hidden lg:flex lg:gap-8 xl:gap-12 2xl:gap-16 items-center min-h-[80vh]">
+          {/* Image Section - Desktop (2/3 of space) */}
+          <div className="w-2/3 flex items-center justify-center">
+            <Services className="" images={images} loop />
+          </div>
+
+          {/* Text Section - Desktop (1/3 of space) */}
+          <div className="w-1/3 flex flex-col justify-center space-y-6 xl:space-y-8">
+            <div className="space-y-4 xl:space-y-6">
+              <h2 className="text-3xl xl:text-4xl 2xl:text-5xl font-bold text-gray-900 leading-tight">
+                Our Premium Services
+              </h2>
+              <motion.p
+                ref={textRef}
+                className="text-base xl:text-lg 2xl:text-xl text-gray-600 leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 20 }}
+                transition={{
+                  duration: 0.8,
+                  ease: "easeOut",
+                  delay: 0.2,
+                }}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-gradient-accent rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">
-                    <service.icon className="w-8 h-8 text-accent-foreground transition-transform" />
-                  </div>
-                  <h3 className="font-serif text-xl font-semibold mb-4 text-foreground group-hover:text-gradient transition-all">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors">
-                    {service.description}
-                  </p>
-                </CardContent>
-              </Card>
-            );
-          })}
+                Discover our comprehensive range of real estate and design
+                services. From luxury interior design to commercial
+                architecture, we deliver exceptional results that exceed
+                expectations.
+              </motion.p>
+            </div>
+
+            <div className="space-y-4 xl:space-y-6">
+              <h3 className="text-lg xl:text-xl 2xl:text-2xl font-semibold text-gray-800">
+                Why Choose Us?
+              </h3>
+              <ul className="space-y-3 xl:space-y-4 text-sm xl:text-base 2xl:text-lg text-gray-600">
+                <li className="flex items-start">
+                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-orange-500 rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
+                  </span>
+                  Expert team with 15+ years of experience
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-orange-500 rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
+                  </span>
+                  Personalized approach to every project
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-orange-500 rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
+                  </span>
+                  Premium quality materials and finishes
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-orange-500 rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
+                  </span>
+                  On-time delivery and budget management
+                </li>
+              </ul>
+            </div>
+
+            <div className="pt-4 xl:pt-6">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 xl:px-10 py-3 xl:py-4 rounded-lg font-semibold transition-colors duration-200 text-base xl:text-lg">
+                Get Started Today
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Services;
+const Services = ({
+  images,
+  className,
+  showPagination = false,
+  showNavigation = false,
+  loop = true,
+  autoplay = false,
+  spaceBetween = 40,
+}: ServicesProps) => {
+  const css = `
+  .Carousal_002 {
+    padding-bottom: 50px !important;
+  }
+  
+  /* Responsive Swiper Styles */
+  @media (max-width: 640px) {
+    .Carousal_002 {
+      height: 280px !important;
+      width: 200px !important;
+    }
+  }
+  
+  @media (min-width: 641px) and (max-width: 768px) {
+    .Carousal_002 {
+      height: 320px !important;
+      width: 220px !important;
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .Carousal_002 {
+      height: 350px !important;
+      width: 240px !important;
+    }
+  }
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    .Carousal_002 {
+      height: 380px !important;
+      width: 260px !important;
+    }
+  }
+  
+  @media (min-width: 1281px) and (max-width: 1536px) {
+    .Carousal_002 {
+      height: 420px !important;
+      width: 280px !important;
+    }
+  }
+  
+  @media (min-width: 1537px) {
+    .Carousal_002 {
+      height: 460px !important;
+      width: 300px !important;
+    }
+  }
+  `;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, translateY: 20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{
+        duration: 0.3,
+        delay: 0.5,
+      }}
+      className={cn("relative w-full flex justify-center", className)}
+    >
+      <style>{css}</style>
+
+      <Swiper
+        spaceBetween={spaceBetween}
+        autoplay={autoplay
+          ? {
+            delay: 1000,
+            disableOnInteraction: false,
+          }
+          : false}
+        effect="cards"
+        grabCursor={true}
+        loop={loop}
+        pagination={showPagination
+          ? {
+            clickable: true,
+          }
+          : false}
+        navigation={showNavigation
+          ? {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          }
+          : false}
+        className="Carousal_002"
+        modules={[EffectCards, Autoplay, Pagination, Navigation]}
+      >
+        {images.map((image, index) => (
+          <SwiperSlide
+            key={index}
+            className="rounded-2xl sm:rounded-3xl overflow-hidden"
+          >
+            <img
+              className="h-full w-full object-cover"
+              src={image.src}
+              alt={image.alt}
+            />
+          </SwiperSlide>
+        ))}
+        {showNavigation && (
+          <div>
+            <div className="swiper-button-next after:hidden">
+              <ChevronRightIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white" />
+            </div>
+            <div className="swiper-button-prev after:hidden">
+              <ChevronLeftIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white" />
+            </div>
+          </div>
+        )}
+      </Swiper>
+    </motion.div>
+  );
+};
+
+export { Services };
+export default Skiper48;

@@ -3,7 +3,7 @@ import Hero from '@/components/Hero';
 import Services from '@/components/Services';
 import Properties from '@/components/Properties';
 import PropertyShowcase from '@/components/PropertyShowcase';
-import About from '@/components/About';
+import About from '@/pages/About';
 import CallToAction from '@/components/CallToAction';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';

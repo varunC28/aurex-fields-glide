@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   AnimatedButton,
   FloatingButton,
@@ -42,6 +43,13 @@ const PropertyShowcase = () => {
   const floatingLeftRef = useParallaxHorizontal("left", 1.05);
   const floatingRightRef = useParallaxHorizontal("right", 1.05);
   const titleRef = useScrollReveal();
+
+  // Framer Motion parallax setup
+  const { scrollYProgress } = useScroll();
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const headerY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+  const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+  const statsY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
   // Property data with all images
   const properties = [
@@ -144,55 +152,86 @@ const PropertyShowcase = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
-        <div ref={titleRef as any} className="text-center mb-20 scroll-reveal">
-          <h2 className="font-serif text-4xl md:text-6xl font-bold text-foreground mb-6">
+        {/* Section Header with Parallax */}
+        <motion.div 
+          ref={titleRef as any} 
+          className="text-center mb-20 scroll-reveal"
+          style={{ y: headerY }}
+        >
+          <motion.h2 
+            className="font-serif text-4xl md:text-6xl font-bold text-foreground mb-6"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
             Exclusive Property
-            <span className="text-gradient block animate-pulse-slow">
+            <motion.span 
+              className="text-gradient block animate-pulse-slow"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              viewport={{ once: true }}
+            >
               Collection
-            </span>
-          </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
+            </motion.span>
+          </motion.h2>
+          <motion.p 
+            className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
             Discover our handpicked selection of the world's most prestigious
             properties, each representing the pinnacle of luxury living and
             architectural excellence.
-          </p>
+          </motion.p>
 
           {/* Main CTA with Skiper52 */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Skiper52 className="text-lg px-10 py-4 min-w-[220px]">
-              <Camera className="w-5 h-5 mr-3" />
-              Virtual Tour
-            </Skiper52>
+          
+        </motion.div>
 
-            <AnimatedButton
-              variant="outline"
-              className="text-lg px-10 py-4 min-w-[220px] border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-            >
-              <Play className="w-5 h-5 mr-3" />
-              Watch Video
-            </AnimatedButton>
-          </div>
-        </div>
-
-        {/* Interactive Image Showcase */}
-        <div className="mb-20">
+        {/* Interactive Image Showcase with Parallax */}
+        <motion.div 
+          className="mb-20"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
           <ImageShowcase />
-        </div>
+        </motion.div>
 
-        {/* Property Grid with Skiper52 Components */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {/* Property Grid with Skiper52 Components and Parallax */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+          style={{ y: gridY }}
+        >
           {properties.map((property, index) => {
             const cardRef = useScrollReveal();
             const imageParallax = useParallaxContent("up", 0.3);
 
             return (
-              <div
+              <motion.div
                 key={property.id}
                 ref={cardRef as any}
                 className={`group relative overflow-hidden rounded-2xl glass hover:shadow-luxury transition-all duration-700 hover:-translate-y-4 hover:rotate-1 border-border/20 scroll-reveal ${
                   index % 2 === 0 ? "scroll-reveal-left" : "scroll-reveal-right"
                 }`}
+                initial={{ opacity: 0, y: 60, rotateX: 15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: index * 0.1,
+                  ease: "easeOut"
+                }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  y: -10, 
+                  rotateY: 5,
+                  transition: { duration: 0.3 }
+                }}
               >
                 {/* Property Image with Parallax */}
                 <div className="relative h-80 overflow-hidden">
@@ -260,13 +299,16 @@ const PropertyShowcase = () => {
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Skiper52>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* Bottom CTA Section */}
-        <div className="text-center">
+        {/* Bottom CTA Section with Parallax */}
+        <motion.div 
+          className="text-center"
+          style={{ y: statsY }}
+        >
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
             <AnimatedButton
               variant="ghost"
@@ -285,37 +327,66 @@ const PropertyShowcase = () => {
             </Skiper52>
           </div>
 
-          {/* Trust Indicators */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pt-8 border-t border-border/20">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gradient mb-2">50+</div>
-              <div className="text-sm text-muted-foreground">
-                Luxury Properties
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gradient mb-2">
-                $500M+
-              </div>
-              <div className="text-sm text-muted-foreground">
-                Portfolio Value
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gradient mb-2">25+</div>
-              <div className="text-sm text-muted-foreground">
-                Prime Locations
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gradient mb-2">100%</div>
-              <div className="text-sm text-muted-foreground">
-                Client Satisfaction
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* Trust Indicators with Staggered Animation */}
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-4 gap-6 pt-8 border-t border-border/20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            {[
+              { value: "50+", label: "Luxury Properties" },
+              { value: "$500M+", label: "Portfolio Value" },
+              { value: "25+", label: "Prime Locations" },
+              { value: "100%", label: "Client Satisfaction" }
+            ].map((stat, index) => (
+              <motion.div 
+                key={index}
+                className="text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  ease: "easeOut"
+                }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                <motion.div 
+                  className="text-2xl font-bold text-gradient mb-2"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ 
+                    duration: 0.5, 
+                    delay: index * 0.1 + 0.3,
+                    type: "spring",
+                    stiffness: 200
+                  }}
+                  viewport={{ once: true }}
+                >
+                  {stat.value}
+                </motion.div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
       </div>
+
+      {/* Enhanced Background Parallax */}
+      <motion.div
+        className="absolute inset-0 opacity-5"
+        style={{ y: backgroundY }}
+      >
+        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20" />
+      </motion.div>
     </section>
   );
 };

@@ -1,181 +1,227 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { MapPin, Bed, Bath, Square, Star } from 'lucide-react';
-import luxuryInterior from '@/assets/luxury-interior.jpg';
-import modernHome from '@/assets/modern-home.jpg';
-import penthouseView from '@/assets/penthouse-view.jpg';
-import villaExterior from '@/assets/villa-exterior.jpg';
-import { useParallaxContent, useParallaxImage, useParallaxHorizontal } from '@/hooks/useSimpleParallax';
-import { useScrollReveal } from '@/hooks/useParallax';
+import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
+import Lenis from "lenis";
+import { useEffect, useRef, useState } from "react";
 
-const properties = [
+// Import images from assets folder
+import luxuryInterior from "@/assets/luxury-interior.jpg";
+import modernHome from "@/assets/modern-home.jpg";
+import penthouseView from "@/assets/penthouse-view.jpg";
+import villaExterior from "@/assets/villa-exterior.jpg";
+import apartmentBuilding from "@/assets/apartment-building.jpg";
+import heroBuilding from "@/assets/hero-building.jpg";
+import officeInterior from "@/assets/office-interior.jpg";
+import officeLobby from "@/assets/office-lobby.jpg";
+import teamMeeting from "@/assets/team-meeting.jpg";
+
+// Property data with titles and descriptions
+const propertyData = [
+  { image: luxuryInterior, title: "Luxury Interior", type: "Premium Design" },
+  { image: modernHome, title: "Modern Home", type: "Contemporary Living" },
+  { image: penthouseView, title: "Penthouse View", type: "City Skyline" },
+  { image: villaExterior, title: "Villa Exterior", type: "Luxury Estate" },
   {
-    id: 1,
-    title: 'Manhattan Penthouse',
-    price: '$12.5M',
-    location: 'Upper East Side, NYC',
-    beds: 4,
-    baths: 3,
-    sqft: '3,200',
-    image: penthouseView,
-    status: 'Featured',
+    image: apartmentBuilding,
+    title: "Apartment Complex",
+    type: "Urban Living",
   },
-  {
-    id: 2,
-    title: 'Modern Estate',
-    price: '$8.2M',
-    location: 'Beverly Hills, CA',
-    beds: 5,
-    baths: 4,
-    sqft: '4,800',
-    image: villaExterior,
-    status: 'New Listing',
-  },
-  {
-    id: 3,
-    title: 'Luxury Interior',
-    price: '$6.8M',
-    location: 'Downtown Miami, FL',
-    beds: 3,
-    baths: 3,
-    sqft: '2,800',
-    image: luxuryInterior,
-    status: 'Premium',
-  },
-  {
-    id: 4,
-    title: 'Modern Home',
-    price: '$4.2M',
-    location: 'Austin, TX',
-    beds: 4,
-    baths: 3,
-    sqft: '3,600',
-    image: modernHome,
-    status: 'Available',
-  },
+  { image: heroBuilding, title: "Commercial Building", type: "Business Hub" },
+  { image: officeInterior, title: "Office Interior", type: "Workspace Design" },
+  { image: officeLobby, title: "Office Lobby", type: "Corporate Space" },
+  { image: teamMeeting, title: "Meeting Space", type: "Collaboration Area" },
+  { image: luxuryInterior, title: "Luxury Interior", type: "Premium Design" },
+  { image: modernHome, title: "Modern Home", type: "Contemporary Living" },
+  { image: penthouseView, title: "Penthouse View", type: "City Skyline" },
+  { image: villaExterior, title: "Villa Exterior", type: "Luxury Estate" },
 ];
 
 const Properties = () => {
-  const backgroundRef = useParallaxContent('down', 0.4);
-  const floatingLeftRef = useParallaxHorizontal('left', 1.05);
-  const floatingRightRef = useParallaxHorizontal('right', 1.05);
-  const titleRef = useScrollReveal();
-  
+  const gallery = useRef<HTMLDivElement>(null);
+  const [dimension, setDimension] = useState({ width: 0, height: 0 });
+
+  const { scrollYProgress } = useScroll({
+    target: gallery,
+    offset: ["start end", "end start"],
+  });
+
+  const { height } = dimension;
+  const y = useTransform(scrollYProgress, [0, 1], [0, height * 2]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, height * 3.3]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, height * 1.25]);
+  const y4 = useTransform(scrollYProgress, [0, 1], [0, height * 3]);
+
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    const resize = () => {
+      setDimension({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    window.addEventListener("resize", resize);
+    requestAnimationFrame(raf);
+    resize();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
   return (
-    <section id="properties" className="relative py-24 overflow-hidden">
-      {/* Floating decorative elements with parallax */}
-      <div ref={floatingRightRef as any} className="absolute top-10 right-10 opacity-20">
-        <Star className="w-8 h-8 text-accent" />
-      </div>
-      <div ref={floatingLeftRef as any} className="absolute bottom-20 left-10 opacity-30">
-        <Star className="w-6 h-6 text-accent" />
-      </div>
-      
-      {/* Parallax gradient overlay */}
-      <div 
-        ref={backgroundRef as any}
-        className="absolute inset-0 opacity-10"
-        style={{
-          background: 'linear-gradient(45deg, hsl(var(--accent)) 0%, transparent 70%)',
-        }}
-      />
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div ref={titleRef as any} className="text-center mb-16 scroll-reveal">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Featured <span className="text-gradient animate-pulse-slow">Properties</span>
+    <main className="w-full bg-[#eee] text-black">
+      <div className="font-geist flex h-screen items-center justify-center">
+        <div className="absolute left-1/2 top-[10%] grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-black">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Our Properties
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Discover our curated selection of exceptional luxury properties, 
-            each representing the pinnacle of sophisticated living.
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+            Explore our diverse portfolio of premium real estate properties and
+            design projects.
           </p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {properties.map((property, index) => {
-            const cardRef = useScrollReveal();
-            const imageParallax = useParallaxImage(1.15);
-            
-            return (
-              <Card 
-                key={property.id}
-                ref={cardRef as any}
-                className={`group overflow-hidden glass hover:shadow-luxury transition-all duration-700 hover:-translate-y-3 hover:rotate-1 border-border/20 scroll-reveal ${index % 2 === 0 ? 'scroll-reveal-left' : 'scroll-reveal-right'}`}
-              >
-                <div className="relative overflow-hidden h-80">
-                  <img
-                    ref={imageParallax as any}
-                    src={property.image}
-                    alt={property.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 left-4 animate-pulse-slow">
-                    <Badge className="bg-accent text-accent-foreground font-semibold shadow-gold">
-                      {property.status}
-                    </Badge>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                  
-                  {/* Hover overlay with floating elements */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-float">
-                      <Star className="w-6 h-6 text-accent" />
-                    </div>
-                  </div>
-                </div>
-                
-                <CardContent className="p-8">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="font-serif text-2xl font-semibold text-foreground group-hover:text-gradient transition-all">
-                      {property.title}
-                    </h3>
-                    <span className="text-2xl font-bold text-gradient animate-pulse-slow">
-                      {property.price}
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center text-muted-foreground mb-6 group-hover:text-foreground transition-colors">
-                    <MapPin className="w-4 h-4 mr-2 group-hover:text-accent transition-colors" />
-                    {property.location}
-                  </div>
-                  
-                  <div className="flex justify-between text-sm text-muted-foreground mb-6 group-hover:text-foreground transition-colors">
-                    <div className="flex items-center hover:scale-105 transition-transform">
-                      <Bed className="w-4 h-4 mr-1" />
-                      {property.beds} Beds
-                    </div>
-                    <div className="flex items-center hover:scale-105 transition-transform">
-                      <Bath className="w-4 h-4 mr-1" />
-                      {property.baths} Baths
-                    </div>
-                    <div className="flex items-center hover:scale-105 transition-transform">
-                      <Square className="w-4 h-4 mr-1" />
-                      {property.sqft} sq ft
-                    </div>
-                  </div>
-                  
-                  <Button className="w-full btn-luxury group-hover:scale-105 transition-transform">
-                    View Details
-                  </Button>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        <div className="text-center">
-          <Button 
-            size="lg" 
-            variant="outline"
-            className="glass border-border hover:bg-accent/10 hover:border-accent transition-all hover:scale-105 animate-pulse-slow"
-          >
-            View All Properties
-          </Button>
+      <div
+        ref={gallery}
+        className="relative box-border flex h-[175vh] gap-[2vw] overflow-hidden bg-white"
+      >
+        <Column
+          properties={[propertyData[0], propertyData[1], propertyData[2]]}
+          y={y}
+        />
+        <Column
+          properties={[propertyData[3], propertyData[4], propertyData[5]]}
+          y={y2}
+        />
+        <Column
+          properties={[propertyData[6], propertyData[7], propertyData[8]]}
+          y={y3}
+        />
+        <Column
+          properties={[propertyData[9], propertyData[10], propertyData[11]]}
+          y={y4}
+        />
+      </div>
+      <div className="font-geist relative flex h-screen items-center justify-center gap-1">
+        <div className="absolute left-1/2 top-[10%] grid -translate-x-1/2 content-start justify-items-center gap-3 text-center text-black">
+          <Skiper62/>
         </div>
       </div>
-    </section>
+    </main>
   );
 };
 
+type PropertyItem = {
+  image: string;
+  title: string;
+  type: string;
+};
+
+type ColumnProps = {
+  properties: PropertyItem[];
+  y: MotionValue<number>;
+};
+
+const Column = ({ properties, y }: ColumnProps) => {
+  return (
+    <motion.div
+      className="relative -top-[45%] flex h-full w-1/4 min-w-[250px] flex-col gap-[2vw] first:top-[-45%] [&:nth-child(2)]:top-[-95%] [&:nth-child(3)]:top-[-45%] [&:nth-child(4)]:top-[-75%]"
+      style={{ y }}
+    >
+      {properties.map((property, i) => (
+        <div
+          key={i}
+          className="group relative h-full w-full overflow-hidden rounded-lg cursor-pointer"
+        >
+          <img
+            src={property.image}
+            alt={property.title}
+            className="pointer-events-none h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          {/* Overlay with property info */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute bottom-4 left-4 text-white">
+              <h3 className="text-lg font-semibold">{property.title}</h3>
+              <p className="text-sm text-gray-200">{property.type}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </motion.div>
+  );
+};
+
+export { Properties };
 export default Properties;
+
+
+import { AnimatePresence } from "framer-motion";
+import { useCallback, useMemo } from "react";
+
+const useLoop = (delay = 1000) => {
+  const [key, setKey] = useState(0);
+
+  const incrementKey = useCallback(() => {
+    setKey((prev) => prev + 1);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(incrementKey, delay);
+    return () => clearInterval(interval);
+  }, [delay, incrementKey]);
+
+  return { key };
+};
+
+export { useLoop };
+
+const Skiper62 = () => {
+  const { key } = useLoop();
+
+  const array = useMemo(
+    () => [
+      "Tik-Tik uno",
+      "Tik-Tik dos",
+      "Tik-Tik tres",
+      "Tik-Tik cuatro",
+      "Tik-Tik cinco",
+      "Tik-Tik seis",
+      "Tik-Tik siete",
+      "Tik-Tik ocho",
+      "Tik-Tik nueve",
+      "Tik-Tik diez",
+    ],
+    [],
+  );
+
+  const currentItem = useMemo(() => {
+    return array[key % array.length];
+  }, [array, key]);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-8 p-8">
+      <div className="mb-20 grid content-start justify-items-center gap-6 text-center">
+        <span className="after:to-foreground relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-transparent after:content-['']">
+          useLoop hook
+        </span>
+      </div>
+      <AnimatePresence mode="popLayout">
+        <motion.h1
+          key={key}
+          initial={{ opacity: 0, y: " 100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: "-100%" }}
+          transition={{ duration: 0.3 }}
+          className="bordr whitespace-nowrap text-center"
+        >
+          {currentItem}
+        </motion.h1>
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export { Skiper62 };
