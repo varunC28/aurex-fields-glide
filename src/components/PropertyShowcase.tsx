@@ -1,16 +1,5 @@
-import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  AnimatedButton,
-  Skiper52,
-} from "@/components/ui/skiper-ui/skiper52";
 import ImageShowcase from "@/components/ImageShowcase";
-import { useScrollReveal } from "@/hooks/useParallax";
-import {
-  ArrowRight,
-  Building,
-  MapPin,
-} from "lucide-react";
 
 // Import all assets
 import apartmentBuilding from "@/assets/apartment-building.jpg";
@@ -24,7 +13,6 @@ import teamMeeting from "@/assets/team-meeting.jpg";
 import villaExterior from "@/assets/villa-exterior.jpg";
 
 // Import new sub-components
-import ShowcaseBackground from "@/components/showcase-components/ShowcaseBackground";
 import ShowcaseHeader from "@/components/showcase-components/ShowcaseHeader";
 import ShowcasePropertyGrid from "@/components/showcase-components/ShowcasePropertyGrid";
 import ShowcaseCTA from "@/components/showcase-components/ShowcaseCTA";
@@ -42,7 +30,6 @@ interface Property {
 const PropertyShowcase = () => {
   // Framer Motion parallax setup
   const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const headerY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
   const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
   const statsY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
@@ -112,11 +99,6 @@ const PropertyShowcase = () => {
       id="showcase"
       className="relative py-32 overflow-hidden bg-gradient-to-br from-secondary/20 to-primary/5"
     >
-      <ShowcaseBackground 
-        backgroundY={backgroundY} 
-        backgroundImages={backgroundImages} 
-      />
-
       <div className="container mx-auto px-6 relative z-10">
         <ShowcaseHeader headerY={headerY} />
 

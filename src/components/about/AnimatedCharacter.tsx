@@ -14,19 +14,19 @@ interface AnimationConfig {
 
 const animationConfigs: Record<AnimationType, AnimationConfig> = {
   text: {
-    xMultiplier: 50,
-    rotateXMultiplier: 50,
+    xMultiplier: 30, // Reduced for smoother animation
+    rotateXMultiplier: 30, // Reduced for smoother animation
   },
   "icon-scale": {
-    xMultiplier: 40,
-    yMultiplier: 25, // Reduced from 50 to prevent cropping
-    scaleRange: [0.75, 1],
+    xMultiplier: 25, // Reduced for smoother animation
+    yMultiplier: 15, // Reduced from 25 to prevent cropping
+    scaleRange: [0.8, 1], // Adjusted scale range
   },
   "icon-rotate": {
-    xMultiplier: 60, // Reduced from 90
-    yMultiplier: -15, // Reduced from -20
-    rotateMultiplier: 30, // Reduced from 50
-    scaleRange: [0.75, 1],
+    xMultiplier: 40, // Reduced for smoother animation
+    yMultiplier: -10, // Reduced for smoother animation
+    rotateMultiplier: 20, // Reduced for smoother animation
+    scaleRange: [0.8, 1], // Adjusted scale range
   },
 };
 
@@ -51,39 +51,39 @@ export function AnimatedCharacter({
   const distanceFromCenter = index - centerIndex;
   const config = animationConfigs[type];
 
-  // Common transforms
+  // Common transforms with adjusted range for smoother animation
   const x = useTransform(
     scrollYProgress,
-    [0, 0.5],
-    [distanceFromCenter * config.xMultiplier, 0]
+    [0, 0.7, 1],
+    [distanceFromCenter * config.xMultiplier, 0, 0]
   );
 
   const scale = config.scaleRange
-    ? useTransform(scrollYProgress, [0, 0.5], config.scaleRange)
+    ? useTransform(scrollYProgress, [0, 0.7, 1], [config.scaleRange[0], config.scaleRange[1], config.scaleRange[1]])
     : undefined;
 
-  // Type-specific transforms
+  // Type-specific transforms with adjusted range
   const y = config.yMultiplier
     ? useTransform(
         scrollYProgress,
-        [0, 0.5],
-        [Math.abs(distanceFromCenter) * config.yMultiplier, 0]
+        [0, 0.7, 1],
+        [Math.abs(distanceFromCenter) * config.yMultiplier, 0, 0]
       )
     : undefined;
 
   const rotate = config.rotateMultiplier
     ? useTransform(
         scrollYProgress,
-        [0, 0.5],
-        [distanceFromCenter * config.rotateMultiplier, 0]
+        [0, 0.7, 1],
+        [distanceFromCenter * config.rotateMultiplier, 0, 0]
       )
     : undefined;
 
   const rotateX = config.rotateXMultiplier
     ? useTransform(
         scrollYProgress,
-        [0, 0.5],
-        [distanceFromCenter * config.rotateXMultiplier, 0]
+        [0, 0.7, 1],
+        [distanceFromCenter * config.rotateXMultiplier, 0, 0]
       )
     : undefined;
 

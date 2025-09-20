@@ -64,7 +64,7 @@ function Header({ isMenuOpen, closeMenu }: { isMenuOpen: boolean; closeMenu: () 
         pointerEvents: 'auto'
       }}>
         <div className="flex items-center justify-between p-4 lg:p-6">
-          <Logo />
+         
         </div>
       </header>
 

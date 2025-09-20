@@ -1,7 +1,6 @@
 import React from "react";
 import { Building, MapPin } from "lucide-react";
-import { AnimatedButton, Skiper52 } from "@/components/ui/skiper-ui/skiper52";
-import TrustIndicators from "@/components/trust-indicators/TrustIndicators";
+import { AnimatedButton } from "@/components/ui/skiper-ui/skiper52";
 
 const ShowcaseCTA: React.FC = () => {
   return (
@@ -23,9 +22,6 @@ const ShowcaseCTA: React.FC = () => {
           Schedule Viewing 
         </AnimatedButton>
       </div>
-
-      {/* Trust Indicators */}
-      <TrustIndicators />
     </div>
   );
 };

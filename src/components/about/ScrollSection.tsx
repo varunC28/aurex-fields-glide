@@ -12,6 +12,8 @@ interface ScrollSectionProps {
   marginTop?: string;
   showPerspective?: boolean;
   children?: ReactNode;
+  height?: string; // Add height prop
+  scrollDuration?: number; // Add scroll duration prop
 }
 
 export function ScrollSection({
@@ -22,10 +24,13 @@ export function ScrollSection({
   marginTop = "",
   showPerspective = false,
   children,
+  height = "h-[210vh]", // Default height
+  scrollDuration = 0.5, // Default scroll duration
 }: ScrollSectionProps) {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
+    offset: ["start end", "end start"]
   });
 
   // Handle both string and icon array content
@@ -35,7 +40,7 @@ export function ScrollSection({
   return (
     <div
       ref={targetRef}
-      className={`relative box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] bg-[#f5f4f3] p-[2vw] ${marginTop} ${className}`}
+      className={`relative box-border flex ${height} flex-col items-center justify-center gap-[2vw] bg-[#f5f4f3] p-[2vw] ${marginTop} ${className}`}
     >
       {headerText && <SectionHeader text={headerText} />}
 

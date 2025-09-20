@@ -1,6 +1,7 @@
 import React from 'react';
 import { Skiper52, AnimatedButton } from '@/components/ui/skiper-ui/skiper52';
 import { Phone, Mail, Calendar, ArrowRight } from 'lucide-react';
+import RotatingText from '@/components/ui/rotatingtext';
 
 const CallToAction = () => {
   return (
@@ -10,7 +11,12 @@ const CallToAction = () => {
           {/* Main heading */}
           <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
             Ready to Experience
-            <span className="text-primary block">Luxury Real Estate?</span>
+            <RotatingText 
+              texts={["Luxury Real Estate?", "Premium Living?", "Your Dream Home?"]}
+              interval={3000}
+              className="text-primary block"
+              transitionType="fade"
+            />
           </h2>
           
           <p className="text-sm md:text-base text-muted-foreground mb-8">

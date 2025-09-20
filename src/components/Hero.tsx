@@ -1,212 +1,64 @@
-import ReactLenis from "lenis/react";
-import {
-  motion,
-  useMotionTemplate,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import { SiSpacex } from "react-icons/si";
-import { FiArrowRight, FiMapPin } from "react-icons/fi";
-import { useRef } from "react";
-// Import local images
-import heroBuilding from "@/assets/hero-building.jpg";
-import modernHome from "@/assets/modern-home.jpg";
-import luxuryInterior from "@/assets/luxury-interior.jpg";
-import penthouseView from "@/assets/penthouse-view.jpg";
-import villaExterior from "@/assets/villa-exterior.jpg";
+"use client";
+import { ThreeDMarquee } from "@/components/ui/3d-marquee";
 
-export const SmoothScrollHero = () => {
-  return (
-    <div className="bg-zinc-950">
-      <ReactLenis
-        root
-        options={{
-          // Learn more -> https://github.com/darkroomengineering/lenis?tab=readme-ov-file#instance-settings
-          lerp: 0.05,
-          //   infinite: true,
-          //   syncTouch: true,
-        }}
-      >
-        <Nav />
-        <Hero />
-        <Schedule />
-      </ReactLenis>
-    </div>
-  );
-};
+export default function Hero() {
+  // Use local images from the public folder (need to copy assets to public folder)
+  const baseImages = [
+    "/assets/apartment-building.jpg",
+    "/assets/bgimage.png",
+    "/assets/hero-building.jpg",
+    "/assets/luxury-interior.jpg",
+    "/assets/modern-home.jpg",
+    "/assets/office-interior.jpg",
+    "/assets/office-lobby.jpg",
+    "/assets/penthouse-view.jpg",
+    "/assets/team-meeting.jpg",
+    "/assets/villa-exterior.jpg"
+  ];
 
-const Nav = () => {
-  return (
-    <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-3 text-white">
-      <SiSpacex className="text-3xl mix-blend-difference" />
-      <button
-        onClick={() => {
-          document.getElementById("launch-schedule")?.scrollIntoView({
-            behavior: "smooth",
-          });
-        }}
-        className="flex items-center gap-1 text-xs text-zinc-400"
-      >
-        LAUNCH SCHEDULE <FiArrowRight />
-      </button>
-    </nav>
-  );
-};
-
-const SECTION_HEIGHT = 1500;
-
-const Hero = () => {
+  // If we need more images, repeat the array until we have enough
+  const images = [];
+  const targetCount = 31; // Same as the original count
+  
+  for (let i = 0; i < targetCount; i++) {
+    images.push(baseImages[i % baseImages.length]);
+  }
+  
   return (
     <div
-      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
-      className="relative w-full pt-20"
-    >
-      <CenterImage />
-
-      <ParallaxImages />
-
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-zinc-950/0 to-zinc-950" />
+      className="relative mx-auto my-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden rounded-none">
+      <h2
+        className="relative z-20 mx-auto max-w-4xl text-center text-2xl font-bold text-balance text-white md:text-4xl lg:text-6xl">
+        This is your life and it&apos;s ending one{" "}
+        <span
+          className="relative z-20 inline-block rounded-xl bg-blue-500/40 px-4 py-1 text-white underline decoration-sky-500 decoration-[6px] underline-offset-[16px] backdrop-blur-sm">
+          moment
+        </span>{" "}
+        at a time.
+      </h2>
+      <p
+        className="relative z-20 mx-auto max-w-2xl py-8 text-center text-sm text-neutral-200 md:text-base">
+        You are not your job, you&apos;re not how much money you have in the
+        bank. You are not the car you drive. You&apos;re not the contents of
+        your wallet.
+      </p>
+      <div
+        className="relative z-20 flex flex-wrap items-center justify-center gap-4 pt-4">
+        <button
+          className="rounded-md bg-sky-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-700 focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-black focus:outline-none">
+          Join the club
+        </button>
+        <button
+          className="rounded-md border border-white/20 bg-white/10 px-6 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-black focus:outline-none">
+          Read more
+        </button>
+      </div>
+      {/* overlay */}
+      <div
+        className="absolute inset-0 z-10 h-full w-full bg-black/50 dark:bg-black/40" />
+      <ThreeDMarquee
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        images={images} />
     </div>
   );
-};
-
-const CenterImage = () => {
-  const { scrollY } = useScroll();
-
-  const clip1 = useTransform(scrollY, [0, 1500], [25, 0]);
-  const clip2 = useTransform(scrollY, [0, 1500], [75, 100]);
-
-  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
-
-  const backgroundSize = useTransform(
-    scrollY,
-    [0, SECTION_HEIGHT + 500],
-    ["170%", "100%"]
-  );
-  const opacity = useTransform(
-    scrollY,
-    [SECTION_HEIGHT, SECTION_HEIGHT + 500],
-    [1, 0]
-  );
-
-  return (
-    <motion.div
-      className="sticky top-0 h-screen w-full"
-      style={{
-        clipPath,
-        backgroundSize,
-        opacity,
-        backgroundImage: `url(${heroBuilding})`,
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    />
-  );
-};
-
-const ParallaxImages = () => {
-  return (
-    <div className="mx-auto max-w-5xl px-4 pt-[200px]">
-      <ParallaxImg
-        src={modernHome}
-        alt="Modern home example"
-        start={-200}
-        end={200}
-        className="w-1/3"
-      />
-      <ParallaxImg
-        src={luxuryInterior}
-        alt="Luxury interior design"
-        start={200}
-        end={-250}
-        className="mx-auto w-2/3"
-      />
-      <ParallaxImg
-        src={penthouseView}
-        alt="Penthouse view"
-        start={-200}
-        end={200}
-        className="ml-auto w-1/3"
-      />
-      <ParallaxImg
-        src={villaExterior}
-        alt="Villa exterior"
-        start={0}
-        end={-500}
-        className="ml-24 w-5/12"
-      />
-    </div>
-  );
-};
-
-const ParallaxImg = ({ className, alt, src, start, end }) => {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: [`${start}px end`, `end ${end * -1}px`],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0.75, 1], [1, 0.85]);
-
-  const y = useTransform(scrollYProgress, [0, 1], [start, end]);
-  const transform = useMotionTemplate`translateY(${y}px) scale(${scale})`;
-
-  return (
-    <motion.img
-      src={src}
-      alt={alt}
-      className={className}
-      ref={ref}
-      style={{ transform, opacity }}
-    />
-  );
-};
-
-const Schedule = () => {
-  return (
-    <section
-      id="launch-schedule"
-      className="mx-auto max-w-5xl px-4 py-48 text-white"
-    >
-      <motion.h1
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ ease: "easeInOut", duration: 0.75 }}
-        className="mb-20 text-4xl font-black uppercase text-zinc-50"
-      >
-        Launch Schedule
-      </motion.h1>
-      <ScheduleItem title="NG-21" date="Dec 9th" location="Florida" />
-      <ScheduleItem title="Starlink" date="Dec 20th" location="Texas" />
-      <ScheduleItem title="Starlink" date="Jan 13th" location="Florida" />
-      <ScheduleItem title="Turksat 6A" date="Feb 22nd" location="Florida" />
-      <ScheduleItem title="NROL-186" date="Mar 1st" location="California" />
-      <ScheduleItem title="GOES-U" date="Mar 8th" location="California" />
-      <ScheduleItem title="ASTRA 1P" date="Apr 8th" location="Texas" />
-    </section>
-  );
-};
-
-const ScheduleItem = ({ title, date, location }) => {
-  return (
-    <motion.div
-      initial={{ y: 48, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      transition={{ ease: "easeInOut", duration: 0.75 }}
-      className="mb-9 flex items-center justify-between border-b border-zinc-800 px-3 pb-9"
-    >
-      <div>
-        <p className="mb-1.5 text-xl text-zinc-50">{title}</p>
-        <p className="text-sm uppercase text-zinc-500">{date}</p>
-      </div>
-      <div className="flex items-center gap-1.5 text-end text-sm uppercase text-zinc-500">
-        <p>{location}</p>
-        <FiMapPin />
-      </div>
-    </motion.div>
-  );
-};
-
-export default Hero;
+}

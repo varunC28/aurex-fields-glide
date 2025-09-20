@@ -33,22 +33,21 @@ const Index = () => {
   return (
     <div ref={containerRef} className="min-h-screen bg-background">
       <Header isMenuOpen={isMenuOpen} closeMenu={closeMenu} />
-      
       <main>
-        <section id="hero" className="animate-section">
+        <section id="hero" className="animate-section h-screen">
           <Hero />
         </section>
-        <section id="services" className="animate-section">
-          <Services />
+        <section id="about" className="animate-section">
+          <About />
         </section>
         <section id="properties" className="animate-section">
           <Properties />
         </section>
+        <section id="services" className="animate-section">
+          <Services />
+        </section>
         <section id="showcase" className="animate-section">
           <PropertyShowcase />
-        </section>
-        <section id="about" className="animate-section">
-          <About />
         </section>
         <section id="cta" className="animate-section">
           <CallToAction />
