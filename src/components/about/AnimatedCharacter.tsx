@@ -1,7 +1,8 @@
 import { motion, useTransform, MotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { LucideIcon } from "lucide-react";
 
-export type AnimationType = "text" | "image-scale" | "image-rotate";
+export type AnimationType = "text" | "icon-scale" | "icon-rotate";
 
 interface AnimationConfig {
   xMultiplier: number;
@@ -16,21 +17,21 @@ const animationConfigs: Record<AnimationType, AnimationConfig> = {
     xMultiplier: 50,
     rotateXMultiplier: 50,
   },
-  "image-scale": {
-    xMultiplier: 50,
-    yMultiplier: 50,
+  "icon-scale": {
+    xMultiplier: 40,
+    yMultiplier: 25, // Reduced from 50 to prevent cropping
     scaleRange: [0.75, 1],
   },
-  "image-rotate": {
-    xMultiplier: 90,
-    yMultiplier: -20,
-    rotateMultiplier: 50,
+  "icon-rotate": {
+    xMultiplier: 60, // Reduced from 90
+    yMultiplier: -15, // Reduced from -20
+    rotateMultiplier: 30, // Reduced from 50
     scaleRange: [0.75, 1],
   },
 };
 
 interface AnimatedCharacterProps {
-  content: string;
+  content: string | { icon: LucideIcon; name: string };
   index: number;
   centerIndex: number;
   scrollYProgress: MotionValue<number>;
@@ -46,7 +47,7 @@ export function AnimatedCharacter({
   type,
   className = "",
 }: AnimatedCharacterProps) {
-  const isSpace = content === " ";
+  const isSpace = typeof content === "string" && content === " ";
   const distanceFromCenter = index - centerIndex;
   const config = animationConfigs[type];
 
@@ -97,17 +98,18 @@ export function AnimatedCharacter({
           rotateX,
         }}
       >
-        {content}
+        {content as string}
       </motion.span>
     );
   }
 
-  // For image types
+  // For icon types
+  const iconData = content as { icon: LucideIcon; name: string };
+  const IconComponent = iconData.icon;
+
   return (
-    <motion.img
-      src={content}
-      alt={`Icon ${index}`}
-      className={baseClassName}
+    <motion.div
+      className={cn(baseClassName, "mx-2 sm:mx-4 md:mx-6")}
       style={{
         x,
         scale,
@@ -115,6 +117,12 @@ export function AnimatedCharacter({
         rotate,
         transformOrigin: "center",
       }}
-    />
+    >
+      <IconComponent 
+        size={48} 
+        className="text-black hover:text-orange-500 transition-colors duration-300" 
+        aria-label={iconData.name}
+      />
+    </motion.div>
   );
 }

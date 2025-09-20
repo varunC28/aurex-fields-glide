@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Logo } from "./header/Logo";
-import { MenuToggle } from "./header/MenuToggle";
 import { NavigationMenu } from "./header/NavigationMenu";
 import { navigationItems } from "@/data/navigation";
 
-function Header() {
+// Export menu state management functions
+export const useHeaderMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Lock/unlock body scroll when menu opens/closes
@@ -44,13 +44,27 @@ function Header() {
     setIsMenuOpen(false);
   };
 
+  return { isMenuOpen, toggleMenu, closeMenu };
+};
+
+function Header({ isMenuOpen, closeMenu }: { isMenuOpen: boolean; closeMenu: () => void }) {
   return (
     <>
       {/* Header Bar - Always Visible */}
-      <header className="fixed top-0 left-0 right-0 z-40 w-full bg-transparent">
+      <header className="fixed top-0 left-0 right-0 z-[9999] w-full bg-transparent" style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 9999,
+        transform: 'translateZ(0)',
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        backgroundColor: 'transparent',
+        pointerEvents: 'auto'
+      }}>
         <div className="flex items-center justify-between p-4 lg:p-6">
           <Logo />
-          <MenuToggle isOpen={isMenuOpen} onToggle={toggleMenu} />
         </div>
       </header>
 

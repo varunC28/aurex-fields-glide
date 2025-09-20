@@ -1,15 +1,27 @@
+import {
+  MessageCircle,
+  Figma,
+  Framer,
+  Github,
+  Monitor,
+  FileText,
+  Package,
+  Zap,
+  Code,
+} from "lucide-react";
+
 export const aboutContent = {
   text: "see more from gxuri",
-  headerText: "intergrate with your fav tech stack",
-  macIcons: [
-    "/mac/Discord.png",
-    "/mac/figma.png",
-    "/mac/Framer.png",
-    "/mac/Github.png",
-    "/mac/Monog.png",
-    "/mac/notion.png",
-    "/mac/Pieces.png",
-    "/mac/Postman.png",
-    "/mac/vsCode.png",
+  headerText: "integrate with your fav tech stack",
+  techIcons: [
+    { icon: MessageCircle, name: "Discord" },
+    { icon: Figma, name: "Figma" },
+    { icon: Framer, name: "Framer" },
+    { icon: Github, name: "GitHub" },
+    { icon: Monitor, name: "Monitor" },
+    { icon: FileText, name: "Notion" },
+    { icon: Package, name: "Pieces" },
+    { icon: Zap, name: "Postman" },
+    { icon: Code, name: "VS Code" },
   ],
 } as const;

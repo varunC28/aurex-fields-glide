@@ -13,18 +13,18 @@ const About = () => {
           showPerspective={true}
         />
 
-        {/* Image Scale Animation Section */}
+        {/* Icon Scale Animation Section */}
         <ScrollSection
-          content={aboutContent.macIcons}
-          animationType="image-scale"
+          content={aboutContent.techIcons}
+          animationType="icon-scale"
           headerText={aboutContent.headerText}
           marginTop="-mt-[100vh]"
         />
 
-        {/* Image Rotate Animation Section */}
+        {/* Icon Rotate Animation Section */}
         <ScrollSection
-          content={aboutContent.macIcons}
-          animationType="image-rotate"
+          content={aboutContent.techIcons}
+          animationType="icon-rotate"
           headerText={aboutContent.headerText}
           marginTop="-mt-[95vh]"
           showPerspective={true}

@@ -1,126 +1,211 @@
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ChevronDown, Sparkles } from "lucide-react";
-import heroImage from "@/assets/hero-building.jpg";
-import { useParallaxBackground } from "@/hooks/useSimpleParallax";
-import { gsap } from "gsap";
-import { TextRoll } from "@/components/ui/TextRoll";
+import ReactLenis from "lenis/react";
+import {
+  motion,
+  useMotionTemplate,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { SiSpacex } from "react-icons/si";
+import { FiArrowRight, FiMapPin } from "react-icons/fi";
+import { useRef } from "react";
+// Import local images
+import heroBuilding from "@/assets/hero-building.jpg";
+import modernHome from "@/assets/modern-home.jpg";
+import luxuryInterior from "@/assets/luxury-interior.jpg";
+import penthouseView from "@/assets/penthouse-view.jpg";
+import villaExterior from "@/assets/villa-exterior.jpg";
+
+export const SmoothScrollHero = () => {
+  return (
+    <div className="bg-zinc-950">
+      <ReactLenis
+        root
+        options={{
+          // Learn more -> https://github.com/darkroomengineering/lenis?tab=readme-ov-file#instance-settings
+          lerp: 0.05,
+          //   infinite: true,
+          //   syncTouch: true,
+        }}
+      >
+        <Nav />
+        <Hero />
+        <Schedule />
+      </ReactLenis>
+    </div>
+  );
+};
+
+const Nav = () => {
+  return (
+    <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-3 text-white">
+      <SiSpacex className="text-3xl mix-blend-difference" />
+      <button
+        onClick={() => {
+          document.getElementById("launch-schedule")?.scrollIntoView({
+            behavior: "smooth",
+          });
+        }}
+        className="flex items-center gap-1 text-xs text-zinc-400"
+      >
+        LAUNCH SCHEDULE <FiArrowRight />
+      </button>
+    </nav>
+  );
+};
+
+const SECTION_HEIGHT = 1500;
 
 const Hero = () => {
-  const backgroundRef = useParallaxBackground(1.3);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const sparklesRef = useRef<HTMLDivElement>(null);
+  return (
+    <div
+      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
+      className="relative w-full pt-20"
+    >
+      <CenterImage />
 
-  useEffect(() => {
-    // Optimize content animations
-    if (contentRef.current) {
-      gsap.fromTo(contentRef.current.children, {
-        opacity: 0,
-        y: 50,
-        scale: 0.95,
-      }, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: "power2.out",
-        delay: 0.3,
-      });
-    }
+      <ParallaxImages />
 
-    // Optimize floating elements
-    if (sparklesRef.current) {
-      const sparkles = sparklesRef.current.children;
-      gsap.set(sparkles, {
-        willChange: "transform",
-        backfaceVisibility: "hidden",
-      });
+      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-zinc-950/0 to-zinc-950" />
+    </div>
+  );
+};
 
-      // Create smooth floating animations
-      Array.from(sparkles).forEach((sparkle, index) => {
-        gsap.to(sparkle, {
-          y: -20,
-          rotation: 360,
-          duration: 4 + index,
-          repeat: -1,
-          yoyo: true,
-          ease: "power1.inOut",
-          delay: index * 0.5,
-        });
-      });
-    }
-  }, []);
+const CenterImage = () => {
+  const { scrollY } = useScroll();
+
+  const clip1 = useTransform(scrollY, [0, 1500], [25, 0]);
+  const clip2 = useTransform(scrollY, [0, 1500], [75, 100]);
+
+  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
+
+  const backgroundSize = useTransform(
+    scrollY,
+    [0, SECTION_HEIGHT + 500],
+    ["170%", "100%"]
+  );
+  const opacity = useTransform(
+    scrollY,
+    [SECTION_HEIGHT, SECTION_HEIGHT + 500],
+    [1, 0]
+  );
 
   return (
-    <section className="relative h-screen overflow-hidden">
-      {/* Background image with simple-parallax-js */}
-      <img
-        ref={backgroundRef as any}
-        src={heroImage}
-        alt="Luxury Real Estate"
-        className="absolute inset-0 w-full h-full object-cover"
+    <motion.div
+      className="sticky top-0 h-screen w-full"
+      style={{
+        clipPath,
+        backgroundSize,
+        opacity,
+        backgroundImage: `url(${heroBuilding})`,
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    />
+  );
+};
+
+const ParallaxImages = () => {
+  return (
+    <div className="mx-auto max-w-5xl px-4 pt-[200px]">
+      <ParallaxImg
+        src={modernHome}
+        alt="Modern home example"
+        start={-200}
+        end={200}
+        className="w-1/3"
       />
-
-      {/* Overlay */}
-      <div
-        className="absolute inset-0 z-10"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%)",
-        }}
+      <ParallaxImg
+        src={luxuryInterior}
+        alt="Luxury interior design"
+        start={200}
+        end={-250}
+        className="mx-auto w-2/3"
       />
+      <ParallaxImg
+        src={penthouseView}
+        alt="Penthouse view"
+        start={-200}
+        end={200}
+        className="ml-auto w-1/3"
+      />
+      <ParallaxImg
+        src={villaExterior}
+        alt="Villa exterior"
+        start={0}
+        end={-500}
+        className="ml-24 w-5/12"
+      />
+    </div>
+  );
+};
 
-      {/* Optimized floating elements */}
-      <div ref={sparklesRef} className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 opacity-20 gpu-accelerated">
-          <Sparkles className="w-6 h-6 text-accent" />
-        </div>
-        <div className="absolute top-40 right-20 opacity-30 gpu-accelerated">
-          <Sparkles className="w-4 h-4 text-accent" />
-        </div>
-        <div className="absolute bottom-40 left-20 opacity-25 gpu-accelerated">
-          <Sparkles className="w-5 h-5 text-accent" />
-        </div>
-      </div>
+const ParallaxImg = ({ className, alt, src, start, end }) => {
+  const ref = useRef(null);
 
-      {/* Content layer */}
-      <div className="relative z-20 flex items-center justify-center h-full text-center">
-        <div ref={contentRef} className="max-w-4xl px-6">
-          <motion.h1
-            className="font-serif text-5xl md:text-7xl font-bold text-white mb-6 text-shadow-lg"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            whileHover={{ scale: 1.02 }}
-          >
-            <motion.span
-              className="block"
-              whileHover={{
-                textShadow: "0 0 20px rgba(255,255,255,0.3)",
-                transition: { duration: 0.3 },
-              }}
-            >Real Estate
-            </motion.span>
-            <motion.span
-              className="text-gradient block"
-              whileHover={{
-                scale: 1.05,
-                textShadow: "0 0 30px rgba(212,175,55,0.4)",
-                transition: { duration: 0.3 },
-              }}
-            >
-              Redefined
-            </motion.span>
-          </motion.h1>
-        </div>
-      </div>
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: [`${start}px end`, `end ${end * -1}px`],
+  });
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <ChevronDown className="w-8 h-8 text-white/70 hover:text-accent transition-colors animate-bounce" />
-      </div>
+  const opacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0.75, 1], [1, 0.85]);
+
+  const y = useTransform(scrollYProgress, [0, 1], [start, end]);
+  const transform = useMotionTemplate`translateY(${y}px) scale(${scale})`;
+
+  return (
+    <motion.img
+      src={src}
+      alt={alt}
+      className={className}
+      ref={ref}
+      style={{ transform, opacity }}
+    />
+  );
+};
+
+const Schedule = () => {
+  return (
+    <section
+      id="launch-schedule"
+      className="mx-auto max-w-5xl px-4 py-48 text-white"
+    >
+      <motion.h1
+        initial={{ y: 48, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ ease: "easeInOut", duration: 0.75 }}
+        className="mb-20 text-4xl font-black uppercase text-zinc-50"
+      >
+        Launch Schedule
+      </motion.h1>
+      <ScheduleItem title="NG-21" date="Dec 9th" location="Florida" />
+      <ScheduleItem title="Starlink" date="Dec 20th" location="Texas" />
+      <ScheduleItem title="Starlink" date="Jan 13th" location="Florida" />
+      <ScheduleItem title="Turksat 6A" date="Feb 22nd" location="Florida" />
+      <ScheduleItem title="NROL-186" date="Mar 1st" location="California" />
+      <ScheduleItem title="GOES-U" date="Mar 8th" location="California" />
+      <ScheduleItem title="ASTRA 1P" date="Apr 8th" location="Texas" />
     </section>
+  );
+};
+
+const ScheduleItem = ({ title, date, location }) => {
+  return (
+    <motion.div
+      initial={{ y: 48, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ ease: "easeInOut", duration: 0.75 }}
+      className="mb-9 flex items-center justify-between border-b border-zinc-800 px-3 pb-9"
+    >
+      <div>
+        <p className="mb-1.5 text-xl text-zinc-50">{title}</p>
+        <p className="text-sm uppercase text-zinc-500">{date}</p>
+      </div>
+      <div className="flex items-center gap-1.5 text-end text-sm uppercase text-zinc-500">
+        <p>{location}</p>
+        <FiMapPin />
+      </div>
+    </motion.div>
   );
 };
 

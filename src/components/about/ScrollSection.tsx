@@ -2,9 +2,10 @@ import { motion, useScroll, MotionValue } from "framer-motion";
 import { useRef, ReactNode } from "react";
 import { AnimatedCharacter, AnimationType } from "./AnimatedCharacter";
 import { SectionHeader } from "./SectionHeader";
+import { LucideIcon } from "lucide-react";
 
 interface ScrollSectionProps {
-  content: string[] | string;
+  content: string | Array<{ icon: LucideIcon; name: string }>;
   animationType: AnimationType;
   headerText?: string;
   className?: string;
@@ -27,24 +28,27 @@ export function ScrollSection({
     target: targetRef,
   });
 
-  // Handle both string and array content
-  const contentArray = Array.isArray(content) ? content : content.split("");
+  // Handle both string and icon array content
+  const contentArray = typeof content === "string" ? content.split("") : content;
   const centerIndex = Math.floor(contentArray.length / 2);
 
   return (
     <div
       ref={targetRef}
-      className={`relative box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-[#f5f4f3] p-[2vw] ${marginTop} ${className}`}
+      className={`relative box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] bg-[#f5f4f3] p-[2vw] ${marginTop} ${className}`}
     >
       {headerText && <SectionHeader text={headerText} />}
-      
+
       <div
-        className="font-geist w-full max-w-4xl text-center text-6xl font-bold uppercase tracking-tighter text-black"
+        className={`font-geist w-full max-w-4xl text-center ${animationType === "text"
+            ? "text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tighter text-black leading-tight py-8"
+            : "flex flex-wrap items-center justify-center gap-4 text-2xl font-medium py-4"
+          }`}
         style={showPerspective ? { perspective: "500px" } : undefined}
       >
         {contentArray.map((item, index) => (
           <AnimatedCharacter
-            key={index}
+            key={typeof item === "string" ? index : item.name}
             content={item}
             index={index}
             centerIndex={centerIndex}
@@ -53,7 +57,7 @@ export function ScrollSection({
           />
         ))}
       </div>
-      
+
       {children}
     </div>
   );
