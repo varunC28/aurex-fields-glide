@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skiper52, AnimatedButton } from '@/components/ui/skiper-ui/skiper52';
+import { AnimatedButton } from '@/components/ui/skiper-ui/skiper52';
 import { Phone, Mail, Calendar, ArrowRight } from 'lucide-react';
 import RotatingText from '@/components/ui/rotatingtext';
 
@@ -30,7 +30,7 @@ const CallToAction = () => {
             <AnimatedButton 
               variant="outline"
               className="text-sm px-6 py-2.5 min-w-[140px]"
-              onClick={() => window.location.href = 'mailto:contact@aurexfields.com'}
+              onClick={() => window.location.href = 'tel:+919821624222'}
             >
               <Phone className="w-4 h-4 mr-2" />
               Call Now
@@ -39,7 +39,7 @@ const CallToAction = () => {
             <AnimatedButton 
               variant="outline"
               className="text-sm px-6 py-2.5 min-w-[140px]"
-              onClick={() => window.location.href = 'mailto:contact@aurexfields.com'}
+              onClick={() => window.location.href = 'mailto:Info@aurexfield.com'}
             >
               <Mail className="w-4 h-4 mr-2" />
               Send Email

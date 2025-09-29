@@ -1,19 +1,37 @@
 "use client";
 import { ThreeDMarquee } from "@/components/ui/3d-marquee";
+import { useNavigate } from "react-router-dom";
+
+// Import images from assets folder
+import apartmentBuilding from "@/assets/apartment-building.jpg";
+import heroBuilding from "@/assets/hero-building.jpg";
+import luxuryInterior from "@/assets/luxury-interior.jpg";
+import modernHome from "@/assets/modern-home.jpg";
+import officeInterior from "@/assets/office-interior.jpg";
+import officeLobby from "@/assets/office-lobby.jpg";
+import penthouseView from "@/assets/penthouse-view.jpg";
+import teamMeeting from "@/assets/team-meeting.jpg";
+import villaExterior from "@/assets/villa-exterior.jpg";
+
 
 export default function Hero() {
-  // Use local images from the public folder (need to copy assets to public folder)
+  const navigate = useNavigate();
+  
+  const handleBrowseEstates = () => {
+    navigate("/properties");
+  };
+
+  // Use local images from the src/assets folder
   const baseImages = [
-    "/assets/apartment-building.jpg",
-    "/assets/bgimage.png",
-    "/assets/hero-building.jpg",
-    "/assets/luxury-interior.jpg",
-    "/assets/modern-home.jpg",
-    "/assets/office-interior.jpg",
-    "/assets/office-lobby.jpg",
-    "/assets/penthouse-view.jpg",
-    "/assets/team-meeting.jpg",
-    "/assets/villa-exterior.jpg"
+    apartmentBuilding,
+    heroBuilding,
+    luxuryInterior,
+    modernHome,
+    officeInterior,
+    officeLobby,
+    penthouseView,
+    teamMeeting,
+    villaExterior
   ];
 
   // If we need more images, repeat the array until we have enough
@@ -45,8 +63,9 @@ export default function Hero() {
       <div
         className="relative z-20 flex flex-wrap items-center justify-center gap-4 pt-4">
         <button
-          className="rounded-md bg-sky-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-700 focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-black focus:outline-none">
-          Join the club
+          className="rounded-md bg-black px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-black focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
+          onClick={handleBrowseEstates}>
+          Browse Estates
         </button>
         <button
           className="rounded-md border border-white/20 bg-white/10 px-6 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-black focus:outline-none">

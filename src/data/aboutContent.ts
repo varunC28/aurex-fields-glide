@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 
 export const aboutContent = {
-  text: "see more from gxuri",
-  headerText: "integrate with your fav tech stack",
+  text: "see more from aurex",
+  headerText: "Aurex Portfolio, Builder & Developers",
   techIcons: [
     { icon: MessageCircle, name: "Discord" },
     { icon: Figma, name: "Figma" },

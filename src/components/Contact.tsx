@@ -5,19 +5,19 @@ import { Textarea } from '@/components/ui/textarea';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { useParallaxBackground, useParallaxContent, useParallaxHorizontal } from '@/hooks/useSimpleParallax';
 import { useScrollReveal } from '@/hooks/useParallax';
-import officeLobby from '@/assets/office-lobby.jpg';
+import { BackgroundBeams } from '@/components/ui/background-beams';
 
 const contactInfo = [
   {
     icon: Phone,
     title: 'Phone',
-    details: '+1 (555) 123-4567',
+    details: '+91 9821624222, +91 7987642268',
     subtitle: 'Mon-Fri 9AM-7PM',
   },
   {
     icon: Mail,
     title: 'Email',
-    details: 'hello@aurexfields.com',
+    details: 'Info@aurexfield.com',
     subtitle: 'We respond within 24h',
   },
   {
@@ -35,7 +35,6 @@ const contactInfo = [
 ];
 
 const Contact = () => {
-  const backgroundRef = useParallaxBackground(1.2);
   const overlayRef = useParallaxContent('up', 0.6);
   const floatingLeftRef = useParallaxHorizontal('left', 1.08);
   const floatingRightRef = useParallaxHorizontal('right', 1.08);
@@ -43,14 +42,9 @@ const Contact = () => {
   const formRef = useScrollReveal();
   
   return (
-    <section id="contact" className="relative py-24 overflow-hidden">
-      {/* Parallax office lobby background */}
-      <img
-        ref={backgroundRef as any}
-        src={officeLobby}
-        alt="Office Lobby"
-        className="absolute inset-0 w-full h-full object-cover opacity-12"
-      />
+    <section id="contact" className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
+      {/* Background beams */}
+      <BackgroundBeams className="absolute inset-0 w-full h-full opacity-12" />
       
       {/* Parallax gradient overlay */}
       <div 
@@ -62,128 +56,99 @@ const Contact = () => {
       />
       
       {/* Floating elements with parallax */}
-      <div ref={floatingLeftRef as any} className="absolute top-16 left-10 opacity-20">
-        <Send className="w-8 h-8 text-accent" />
+      <div ref={floatingLeftRef as any} className="absolute top-6 left-3 sm:top-8 sm:left-4 opacity-20">
+        <Send className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
       </div>
-      <div ref={floatingRightRef as any} className="absolute bottom-20 right-16 opacity-25">
-        <Mail className="w-6 h-6 text-primary" />
+      <div ref={floatingRightRef as any} className="absolute bottom-6 right-3 sm:bottom-8 sm:right-4 opacity-25">
+        <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
       </div>
       
-      <div className="container mx-auto px-6 relative z-10">
-        <div ref={titleRef as any} className="text-center mb-16 scroll-reveal">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Get In <span className="text-gradient animate-pulse-slow">Touch</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ready to elevate your real estate experience? Let's discuss how we can 
-            help you achieve your luxury property goals.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div className="scroll-reveal-left">
-            <h3 className="font-serif text-2xl font-semibold mb-8 text-foreground">
-              Contact Information
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-              {contactInfo.map((item, index) => (
-                <Card 
-                  key={index} 
-                  className={`glass border-border/20 hover:shadow-elegant transition-all duration-500 hover:-translate-y-2 hover:rotate-1 animate-sway`}
-                  style={{ animationDelay: `${index * 1}s` }}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-10 h-10 bg-gradient-accent rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 hover:rotate-12 transition-all duration-300">
-                        <item.icon className="w-5 h-5 text-accent-foreground" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-1 hover:text-gradient transition-all">
-                          {item.title}
-                        </h4>
-                        <p className="text-foreground font-medium mb-1 hover:text-accent transition-colors">
-                          {item.details}
-                        </p>
-                        <p className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                          {item.subtitle}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
+          {/* Text elements in the center of the left 1/2 */}
+          <div className="flex items-center">
+            <div ref={titleRef as any} className="scroll-reveal text-center w-full">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">
+                Get In <span className="text-gradient animate-pulse-slow">Touch</span>
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto mb-6 sm:mb-8">
+                Ready to elevate your real estate experience? Let's discuss how we can 
+                help you achieve your luxury property goals.
+              </p>
             </div>
           </div>
 
-          <Card ref={formRef as any} className="glass border-border/20 scroll-reveal-right hover:shadow-luxury transition-all duration-500">
-            <CardContent className="p-8">
-              <h3 className="font-serif text-2xl font-semibold mb-6 text-foreground">
-                Send Us a Message
-              </h3>
-              
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="hover:-translate-y-1 transition-transform">
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      First Name
+          {/* Contact form on the right side */}
+          <div ref={formRef as any} className="scroll-reveal-right flex items-center">
+            <Card className="glass border-border/20 hover:shadow-luxury transition-all duration-300 w-full">
+              <CardContent className="p-4 sm:p-6">
+                <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 text-foreground">
+                  Send Us a Message
+                </h3>
+                
+                <form className="space-y-3 sm:space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                    <div>
+                      <label className="block text-xs sm:text-sm font-medium text-foreground mb-1">
+                        First Name
+                      </label>
+                      <Input 
+                        placeholder="John" 
+                        className="glass border-border/30 hover:border-accent/50 transition-all text-sm sm:text-base"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs sm:text-sm font-medium text-foreground mb-1">
+                        Last Name
+                      </label>
+                      <Input 
+                        placeholder="Doe" 
+                        className="glass border-border/30 hover:border-accent/50 transition-all text-sm sm:text-base"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium text-foreground mb-1">
+                      Email Address
                     </label>
                     <Input 
-                      placeholder="John" 
-                      className="glass border-border/30 hover:border-accent/50 transition-all focus:scale-105"
+                      type="email" 
+                      placeholder="Info@aurexfield.com"
+                      className="glass border-border/30 hover:border-accent/50 transition-all text-sm sm:text-base"
                     />
                   </div>
-                  <div className="hover:-translate-y-1 transition-transform">
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Last Name
+                  
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium text-foreground mb-1">
+                      Phone Number
                     </label>
                     <Input 
-                      placeholder="Doe" 
-                      className="glass border-border/30 hover:border-accent/50 transition-all focus:scale-105"
+                      type="tel" 
+                      placeholder="+91 9821624222"
+                      className="glass border-border/30 hover:border-accent/50 transition-all text-sm sm:text-base"
                     />
                   </div>
-                </div>
-                
-                <div className="hover:-translate-y-1 transition-transform">
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Email Address
-                  </label>
-                  <Input 
-                    type="email" 
-                    placeholder="john@example.com"
-                    className="glass border-border/30 hover:border-accent/50 transition-all focus:scale-105"
-                  />
-                </div>
-                
-                <div className="hover:-translate-y-1 transition-transform">
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Phone Number
-                  </label>
-                  <Input 
-                    type="tel" 
-                    placeholder="+1 (555) 123-4567"
-                    className="glass border-border/30 hover:border-accent/50 transition-all focus:scale-105"
-                  />
-                </div>
-                
-                <div className="hover:-translate-y-1 transition-transform">
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Message
-                  </label>
-                  <Textarea 
-                    placeholder="Tell us about your real estate needs..."
-                    rows={5}
-                    className="glass border-border/30 hover:border-accent/50 transition-all focus:scale-105"
-                  />
-                </div>
-                
-                <Button size="lg" className="w-full btn-luxury hover:scale-105 transition-transform animate-pulse-slow">
-                  <Send className="w-4 h-4 mr-2" />
-                  Send Message
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+                  
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium text-foreground mb-1">
+                      Message
+                    </label>
+                    <Textarea 
+                      placeholder="Tell us about your real estate needs..."
+                      rows={3}
+                      className="glass border-border/30 hover:border-accent/50 transition-all text-sm sm:text-base"
+                    />
+                  </div>
+                  
+                  <Button size="sm" className="w-full btn-luxury hover:scale-105 transition-transform">
+                    <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                    Send Message
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </section>

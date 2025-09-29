@@ -45,8 +45,9 @@ const Footer = () => {
             <h3 className="font-semibold text-lg mb-4">Contact</h3>
             <ul className="space-y-2 text-primary-foreground/80">
               <li>432 Park Avenue, NYC</li>
-              <li>+1 (555) 123-4567</li>
-              <li>hello@aurexfields.com</li>
+              <li>+91 9821624222</li>
+              <li>+91 7987642268</li>
+              <li>Info@aurexfield.com</li>
               <li>Mon-Fri 9AM-7PM</li>
             </ul>
           </div>

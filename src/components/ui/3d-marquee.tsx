@@ -16,7 +16,7 @@ export const ThreeDMarquee = ({
   return (
     <div
       className={cn(
-        "mx-auto block h-full w-full overflow-hidden rounded-2xl max-sm:h-100",
+        "mx-auto block h-full w-full overflow-hidden rounded-2xl max-sm:h-[120%]",
         className,
       )}
     >
@@ -26,7 +26,7 @@ export const ThreeDMarquee = ({
             style={{
               transform: "rotateX(55deg) rotateY(0deg) rotateZ(-45deg)",
             }}
-            className="relative top-1/2 -translate-y-1/2 right-[50%] grid size-full origin-top-left grid-cols-4 gap-8 transform-3d"
+            className="relative top-1/2 -translate-y-1/2 right-[50%] grid size-full origin-top-left grid-cols-4 max-sm:grid-cols-2 gap-8 max-sm:gap-12 max-sm:scale-125 transform-3d"
           >
             {chunks.map((subarray, colIndex) => (
               <motion.div
@@ -37,12 +37,12 @@ export const ThreeDMarquee = ({
                   repeatType: "reverse",
                 }}
                 key={colIndex + "marquee"}
-                className="flex flex-col items-start gap-8"
+                className="flex flex-col items-start gap-8 max-sm:gap-12"
               >
-                <GridLineVertical className="-left-4" offset="80px" />
+                <GridLineVertical className="-left-4 max-sm:-left-6" offset="80px" />
                 {subarray.map((image, imageIndex) => (
                   <div className="relative" key={imageIndex + image}>
-                    <GridLineHorizontal className="-top-4" offset="20px" />
+                    <GridLineHorizontal className="-top-4 max-sm:-top-6" offset="20px" />
                     <motion.img
                       whileHover={{
                         y: -10,
@@ -54,7 +54,7 @@ export const ThreeDMarquee = ({
                       key={imageIndex + image}
                       src={image}
                       alt={`Image ${imageIndex + 1}`}
-                      className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl"
+                      className="aspect-[970/700] max-sm:aspect-[485/350] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl"
                       width={970}
                       height={700}
                       onError={(e) => {

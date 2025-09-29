@@ -116,6 +116,11 @@ const Skiper48 = () => {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Mobile and Tablet Layout (Stack Vertically) */}
         <div className="flex flex-col lg:hidden space-y-8 sm:space-y-12">
+          {/* Image Section - Mobile */}
+          <div className="w-full flex items-center justify-center">
+            <Services className="" images={images} loop />
+          </div>
+          
           {/* Text Section - Mobile First */}
           <div className="w-full flex flex-col justify-center space-y-6 text-center sm:text-left">
             <div className="space-y-4">
@@ -136,22 +141,22 @@ const Skiper48 = () => {
               </h3>
               <ul className="space-y-3 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto sm:mx-0">
                 <li className="flex items-start">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0">
+                  <span className="w-2 h-2 bg-[#FFD700] rounded-full mt-2 mr-3 flex-shrink-0">
                   </span>
                   Expert team with 15+ years of experience
                 </li>
                 <li className="flex items-start">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0">
+                  <span className="w-2 h-2 bg-[#FFD700] rounded-full mt-2 mr-3 flex-shrink-0">
                   </span>
                   Personalized approach to every project
                 </li>
                 <li className="flex items-start">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0">
+                  <span className="w-2 h-2 bg-[#FFD700] rounded-full mt-2 mr-3 flex-shrink-0">
                   </span>
                   Premium quality materials and finishes
                 </li>
                 <li className="flex items-start">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0">
+                  <span className="w-2 h-2 bg-[#FFD700] rounded-full mt-2 mr-3 flex-shrink-0">
                   </span>
                   On-time delivery and budget management
                 </li>
@@ -159,15 +164,10 @@ const Skiper48 = () => {
             </div>
 
             <div className="pt-4">
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-colors duration-200 text-sm sm:text-base">
+              <button className="bg-[#2E3A59] hover:bg-[#1F2937] text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-colors duration-200 text-sm sm:text-base">
                 Get Started Today
               </button>
             </div>
-          </div>
-
-          {/* Image Section - Mobile */}
-          <div className="w-full flex items-center justify-center">
-            <Services className="" images={images} loop />
           </div>
         </div>
 
@@ -210,22 +210,22 @@ const Skiper48 = () => {
               </h3>
               <ul className="space-y-3 xl:space-y-4 text-sm xl:text-base 2xl:text-lg text-gray-600">
                 <li className="flex items-start">
-                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-orange-500 rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
+                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-[#FFD700] rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
                   </span>
                   Expert team with 15+ years of experience
                 </li>
                 <li className="flex items-start">
-                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-orange-500 rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
+                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-[#FFD700] rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
                   </span>
                   Personalized approach to every project
                 </li>
                 <li className="flex items-start">
-                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-orange-500 rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
+                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-[#FFD700] rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
                   </span>
                   Premium quality materials and finishes
                 </li>
                 <li className="flex items-start">
-                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-orange-500 rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
+                  <span className="w-2 h-2 xl:w-2.5 xl:h-2.5 bg-[#FFD700] rounded-full mt-2 mr-3 xl:mr-4 flex-shrink-0">
                   </span>
                   On-time delivery and budget management
                 </li>
@@ -233,7 +233,7 @@ const Skiper48 = () => {
             </div>
 
             <div className="pt-4 xl:pt-6">
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 xl:px-10 py-3 xl:py-4 rounded-lg font-semibold transition-colors duration-200 text-base xl:text-lg">
+              <button className="bg-[#2E3A59] hover:bg-[#1F2937] text-white px-8 xl:px-10 py-3 xl:py-4 rounded-lg font-semibold transition-colors duration-200 text-base xl:text-lg">
                 Get Started Today
               </button>
             </div>
@@ -258,47 +258,84 @@ const Services = ({
     padding-bottom: 50px !important;
   }
   
-  /* Responsive Swiper Styles */
+  /* Responsive Swiper Styles - Increased image sizes */
   @media (max-width: 640px) {
     .Carousal_002 {
-      height: 280px !important;
-      width: 200px !important;
+      height: 320px !important;
+      width: 240px !important;
     }
   }
   
   @media (min-width: 641px) and (max-width: 768px) {
     .Carousal_002 {
-      height: 320px !important;
-      width: 220px !important;
+      height: 380px !important;
+      width: 280px !important;
     }
   }
   
   @media (min-width: 769px) and (max-width: 1024px) {
     .Carousal_002 {
-      height: 350px !important;
-      width: 240px !important;
+      height: 420px !important;
+      width: 320px !important;
     }
   }
   
   @media (min-width: 1025px) and (max-width: 1280px) {
     .Carousal_002 {
-      height: 380px !important;
-      width: 260px !important;
+      height: 460px !important;
+      width: 360px !important;
     }
   }
   
   @media (min-width: 1281px) and (max-width: 1536px) {
     .Carousal_002 {
-      height: 420px !important;
-      width: 280px !important;
+      height: 500px !important;
+      width: 400px !important;
     }
   }
   
   @media (min-width: 1537px) {
     .Carousal_002 {
-      height: 460px !important;
-      width: 300px !important;
+      height: 550px !important;
+      width: 450px !important;
     }
+  }
+  
+  /* Navigation buttons styling with theme colors */
+  .swiper-button-next,
+  .swiper-button-prev {
+    background: hsl(222, 47%, 11%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    background: hsl(43, 100%, 68%);
+    transform: scale(1.1);
+  }
+  
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    display: none;
+  }
+  
+  /* Pagination styling */
+  .swiper-pagination-bullet {
+    background: hsl(220, 14%, 96%);
+    opacity: 1;
+    width: 10px;
+    height: 10px;
+  }
+  
+  .swiper-pagination-bullet-active {
+    background: hsl(43, 100%, 68%);
+    transform: scale(1.2);
   }
   `;
 
@@ -342,7 +379,7 @@ const Services = ({
         {images.map((image, index) => (
           <SwiperSlide
             key={index}
-            className="rounded-2xl sm:rounded-3xl overflow-hidden"
+            className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg"
           >
             <img
               className="h-full w-full object-cover"
@@ -354,10 +391,10 @@ const Services = ({
         {showNavigation && (
           <div>
             <div className="swiper-button-next after:hidden">
-              <ChevronRightIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white" />
+              <ChevronRightIcon className="h-5 w-5 text-white" />
             </div>
             <div className="swiper-button-prev after:hidden">
-              <ChevronLeftIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-white" />
+              <ChevronLeftIcon className="h-5 w-5 text-white" />
             </div>
           </div>
         )}

@@ -3,18 +3,14 @@ import ImageShowcase from "@/components/ImageShowcase";
 
 // Import all assets
 import apartmentBuilding from "@/assets/apartment-building.jpg";
-import heroBuilding from "@/assets/hero-building.jpg";
 import luxuryInterior from "@/assets/luxury-interior.jpg";
 import modernHome from "@/assets/modern-home.jpg";
 import officeInterior from "@/assets/office-interior.jpg";
-import officeLobby from "@/assets/office-lobby.jpg";
 import penthouseView from "@/assets/penthouse-view.jpg";
-import teamMeeting from "@/assets/team-meeting.jpg";
 import villaExterior from "@/assets/villa-exterior.jpg";
 
 // Import new sub-components
 import ShowcaseHeader from "@/components/showcase-components/ShowcaseHeader";
-import ShowcasePropertyGrid from "@/components/showcase-components/ShowcasePropertyGrid";
 import ShowcaseCTA from "@/components/showcase-components/ShowcaseCTA";
 
 interface Property {
@@ -92,19 +88,17 @@ const PropertyShowcase = () => {
     },
   ];
 
-  const backgroundImages = [officeLobby, teamMeeting, heroBuilding];
-
   return (
     <section
       id="showcase"
-      className="relative py-32 overflow-hidden bg-gradient-to-br from-secondary/20 to-primary/5"
+      className="relative py-16 sm:py-24 md:py-32 overflow-hidden bg-gradient-to-br from-secondary/20 to-primary/5"
     >
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <ShowcaseHeader headerY={headerY} />
 
         {/* Interactive Image Showcase with Parallax */}
         <motion.div 
-          className="mb-20"
+          className="mb-12 sm:mb-16 md:mb-20"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -112,12 +106,6 @@ const PropertyShowcase = () => {
         >
           <ImageShowcase />
         </motion.div>
-
-        <ShowcasePropertyGrid 
-          gridY={gridY} 
-          properties={properties} 
-        />
-
         <ShowcaseCTA statsY={statsY} />
       </div>
     </section>

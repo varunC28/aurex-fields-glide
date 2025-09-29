@@ -42,5 +42,4 @@ const ShowcasePropertyGrid: React.FC<ShowcasePropertyGridProps> = ({ gridY, prop
     </motion.div>
   );
 };
-
 export default ShowcasePropertyGrid;

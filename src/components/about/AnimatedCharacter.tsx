@@ -37,6 +37,7 @@ interface AnimatedCharacterProps {
   scrollYProgress: MotionValue<number>;
   type: AnimationType;
   className?: string;
+  scrollDuration?: number; // Add scroll duration prop
 }
 
 export function AnimatedCharacter({
@@ -46,6 +47,7 @@ export function AnimatedCharacter({
   scrollYProgress,
   type,
   className = "",
+  scrollDuration = 0.9, // Default scroll duration
 }: AnimatedCharacterProps) {
   const isSpace = typeof content === "string" && content === " ";
   const distanceFromCenter = index - centerIndex;
@@ -54,19 +56,19 @@ export function AnimatedCharacter({
   // Common transforms with adjusted range for smoother animation
   const x = useTransform(
     scrollYProgress,
-    [0, 0.7, 1],
+    [0, 0.5, 1], // Reduced range for faster effect
     [distanceFromCenter * config.xMultiplier, 0, 0]
   );
 
   const scale = config.scaleRange
-    ? useTransform(scrollYProgress, [0, 0.7, 1], [config.scaleRange[0], config.scaleRange[1], config.scaleRange[1]])
+    ? useTransform(scrollYProgress, [0, 0.5, 1], [config.scaleRange[0], config.scaleRange[1], config.scaleRange[1]])
     : undefined;
 
   // Type-specific transforms with adjusted range
   const y = config.yMultiplier
     ? useTransform(
         scrollYProgress,
-        [0, 0.7, 1],
+        [0, 0.5, 1], // Reduced range for faster effect
         [Math.abs(distanceFromCenter) * config.yMultiplier, 0, 0]
       )
     : undefined;
@@ -74,7 +76,7 @@ export function AnimatedCharacter({
   const rotate = config.rotateMultiplier
     ? useTransform(
         scrollYProgress,
-        [0, 0.7, 1],
+        [0, 0.5, 1], // Reduced range for faster effect
         [distanceFromCenter * config.rotateMultiplier, 0, 0]
       )
     : undefined;
@@ -82,21 +84,22 @@ export function AnimatedCharacter({
   const rotateX = config.rotateXMultiplier
     ? useTransform(
         scrollYProgress,
-        [0, 0.7, 1],
+        [0, 0.5, 1], // Reduced range for faster effect
         [distanceFromCenter * config.rotateXMultiplier, 0, 0]
       )
     : undefined;
 
-  const baseClassName = cn("inline-block", isSpace && "w-4", className);
+  const baseClassName = cn("inline-block", isSpace && "w-2 sm:w-3 md:w-4", className);
 
   if (type === "text") {
     return (
       <motion.span
-        className={cn(baseClassName, "text-orange-500")}
+        className={cn(baseClassName, "text-primary")}
         style={{
           x,
           rotateX,
         }}
+        transition={{ duration: scrollDuration }}
       >
         {content as string}
       </motion.span>
@@ -109,7 +112,7 @@ export function AnimatedCharacter({
 
   return (
     <motion.div
-      className={cn(baseClassName, "mx-2 sm:mx-4 md:mx-6")}
+      className={cn(baseClassName, "mx-1 sm:mx-2 md:mx-3 lg:mx-4")}
       style={{
         x,
         scale,
@@ -117,10 +120,11 @@ export function AnimatedCharacter({
         rotate,
         transformOrigin: "center",
       }}
+      transition={{ duration: scrollDuration }}
     >
       <IconComponent 
-        size={48} 
-        className="text-black hover:text-orange-500 transition-colors duration-300" 
+        size={32} 
+        className="text-foreground hover:text-accent transition-colors duration-300 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" 
         aria-label={iconData.name}
       />
     </motion.div>

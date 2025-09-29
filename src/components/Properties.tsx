@@ -13,25 +13,25 @@ import officeInterior from "@/assets/office-interior.jpg";
 import officeLobby from "@/assets/office-lobby.jpg";
 import teamMeeting from "@/assets/team-meeting.jpg";
 
-// Property data with titles and descriptions
+// Aurex & Fields value-focused content
 const propertyData = [
-  { image: luxuryInterior, title: "Luxury Interior", type: "Premium Design" },
-  { image: modernHome, title: "Modern Home", type: "Contemporary Living" },
-  { image: penthouseView, title: "Penthouse View", type: "City Skyline" },
-  { image: villaExterior, title: "Villa Exterior", type: "Luxury Estate" },
+  { image: luxuryInterior, title: "Transparency", type: "Clear Communication" },
+  { image: modernHome, title: "Authenticity", type: "Genuine Relationships" },
+  { image: penthouseView, title: "Professionalism", type: "Expert Service" },
+  { image: villaExterior, title: "Market Insight", type: "Deep Understanding" },
   {
     image: apartmentBuilding,
-    title: "Apartment Complex",
-    type: "Urban Living",
+    title: "Client Focus",
+    type: "Personalized Approach",
   },
-  { image: heroBuilding, title: "Commercial Building", type: "Business Hub" },
-  { image: officeInterior, title: "Office Interior", type: "Workspace Design" },
-  { image: officeLobby, title: "Office Lobby", type: "Corporate Space" },
-  { image: teamMeeting, title: "Meeting Space", type: "Collaboration Area" },
-  { image: luxuryInterior, title: "Luxury Interior", type: "Premium Design" },
-  { image: modernHome, title: "Modern Home", type: "Contemporary Living" },
-  { image: penthouseView, title: "Penthouse View", type: "City Skyline" },
-  { image: villaExterior, title: "Villa Exterior", type: "Luxury Estate" },
+  { image: heroBuilding, title: "Innovation", type: "Modern Solutions" },
+  { image: officeInterior, title: "Integrity", type: "Ethical Standards" },
+  { image: officeLobby, title: "Excellence", type: "Quality Results" },
+  { image: teamMeeting, title: "Dedication", type: "Commitment to Success" },
+  { image: luxuryInterior, title: "Transparency", type: "Clear Communication" },
+  { image: modernHome, title: "Authenticity", type: "Genuine Relationships" },
+  { image: penthouseView, title: "Professionalism", type: "Expert Service" },
+  { image: villaExterior, title: "Market Insight", type: "Deep Understanding" },
 ];
 
 const Properties = () => {
@@ -75,11 +75,10 @@ const Properties = () => {
       <div className="font-geist flex h-screen items-center justify-center">
         <div className="absolute left-1/2 top-[10%] grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-black">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Our Properties
+            Our Core Values
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-            Explore our diverse portfolio of premium real estate properties and
-            design projects.
+            At Aurex & Fields, we build trust through Transparency, Authenticity, and Professionalism in every real estate transaction.
           </p>
         </div>
       </div>
@@ -183,16 +182,12 @@ const Skiper62 = () => {
 
   const array = useMemo(
     () => [
-      "Tik-Tik uno",
-      "Tik-Tik dos",
-      "Tik-Tik tres",
-      "Tik-Tik cuatro",
-      "Tik-Tik cinco",
-      "Tik-Tik seis",
-      "Tik-Tik siete",
-      "Tik-Tik ocho",
-      "Tik-Tik nueve",
-      "Tik-Tik diez",
+      "Transparency",
+      "Authenticity",
+      "Professionalism",
+      "Trust",
+      "Excellence",
+      "Integrity",
     ],
     [],
   );
@@ -205,7 +200,7 @@ const Skiper62 = () => {
     <div className="flex flex-col items-center justify-center gap-8 p-8">
       <div className="mb-20 grid content-start justify-items-center gap-6 text-center">
         <span className="after:to-foreground relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-transparent after:content-['']">
-          useLoop hook
+          Aurex & Fields Values
         </span>
       </div>
       <AnimatePresence mode="popLayout">
@@ -215,7 +210,7 @@ const Skiper62 = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: "-100%" }}
           transition={{ duration: 0.3 }}
-          className="bordr whitespace-nowrap text-center"
+          className="bordr whitespace-nowrap text-center text-4xl md:text-5xl lg:text-6xl font-bold"
         >
           {currentItem}
         </motion.h1>
