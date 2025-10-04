@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import ImageShowcase from "@/components/ImageShowcase";
+import { useNavigate } from "react-router-dom";
 
 // Import all assets
 import apartmentBuilding from "@/assets/apartment-building.jpg";
@@ -24,6 +25,7 @@ interface Property {
 }
 
 const PropertyShowcase = () => {
+  const navigate = useNavigate();
   // Framer Motion parallax setup
   const { scrollYProgress } = useScroll();
   const headerY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
@@ -98,11 +100,21 @@ const PropertyShowcase = () => {
 
         {/* Interactive Image Showcase with Parallax */}
         <motion.div 
-          className="mb-12 sm:mb-16 md:mb-20"
+          className="mb-12 sm:mb-16 md:mb-20 cursor-pointer"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           viewport={{ once: true }}
+          role="button"
+          tabIndex={0}
+          aria-label="View all properties"
+          onClick={() => navigate('/properties')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              navigate('/properties');
+            }
+          }}
         >
           <ImageShowcase />
         </motion.div>

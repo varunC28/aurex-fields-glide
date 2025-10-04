@@ -1,4 +1,5 @@
 import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Lenis from "lenis";
 import { useEffect, useRef, useState } from "react";
 
@@ -70,6 +71,8 @@ const Properties = () => {
     };
   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <main className="w-full bg-[#eee] text-black">
       <div className="font-geist flex h-screen items-center justify-center">
@@ -85,23 +88,27 @@ const Properties = () => {
 
       <div
         ref={gallery}
-        className="relative box-border flex h-[175vh] gap-[2vw] overflow-hidden bg-white"
+        className="relative box-border flex h-[175vh] gap-[2vw] overflow-hidden bg-white properties-gallery"
       >
         <Column
           properties={[propertyData[0], propertyData[1], propertyData[2]]}
           y={y}
+          onClickCard={() => navigate('/properties')}
         />
         <Column
           properties={[propertyData[3], propertyData[4], propertyData[5]]}
           y={y2}
+          onClickCard={() => navigate('/properties')}
         />
         <Column
           properties={[propertyData[6], propertyData[7], propertyData[8]]}
           y={y3}
+          onClickCard={() => navigate('/properties')}
         />
         <Column
           properties={[propertyData[9], propertyData[10], propertyData[11]]}
           y={y4}
+          onClickCard={() => navigate('/properties')}
         />
       </div>
       <div className="font-geist relative flex h-screen items-center justify-center gap-1">
@@ -122,9 +129,10 @@ type PropertyItem = {
 type ColumnProps = {
   properties: PropertyItem[];
   y: MotionValue<number>;
+  onClickCard?: () => void;
 };
 
-const Column = ({ properties, y }: ColumnProps) => {
+const Column = ({ properties, y, onClickCard }: ColumnProps) => {
   return (
     <motion.div
       className="relative -top-[45%] flex h-full w-1/4 min-w-[250px] flex-col gap-[2vw] first:top-[-45%] [&:nth-child(2)]:top-[-95%] [&:nth-child(3)]:top-[-45%] [&:nth-child(4)]:top-[-75%]"
@@ -134,6 +142,16 @@ const Column = ({ properties, y }: ColumnProps) => {
         <div
           key={i}
           className="group relative h-full w-full overflow-hidden rounded-lg cursor-pointer"
+          role="button"
+          tabIndex={0}
+          aria-label={`View properties - ${property.title}`}
+          onClick={onClickCard}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onClickCard && onClickCard();
+            }
+          }}
         >
           <img
             src={property.image}

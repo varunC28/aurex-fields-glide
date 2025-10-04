@@ -23,4 +23,8 @@ export const navigationItems = [
     name: "Contact",
     href: "#contact",
   },
+  {
+    name: "Blog",
+    href: "/blog",
+  },
 ];
