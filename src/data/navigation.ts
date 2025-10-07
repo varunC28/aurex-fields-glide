@@ -17,7 +17,7 @@ export const navigationItems = [
   },
   {
     name: "About",
-    href: "#about",
+    href: "/about",
   },
   {
     name: "Contact",

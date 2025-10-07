@@ -37,9 +37,6 @@ const Index = () => {
         <section id="hero" className="animate-section h-screen">
           <Hero />
         </section>
-        <section id="about" className="animate-section">
-          <About />
-        </section>
         <section id="properties" className="animate-section">
           <Properties />
         </section>

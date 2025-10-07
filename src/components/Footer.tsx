@@ -44,7 +44,11 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Contact</h3>
             <ul className="space-y-2 text-primary-foreground/80">
-              <li>432 Park Avenue, NYC</li>
+              <li>Aurex & Field
+                  Office No. 914, 9th Floor,
+                  Emaar Emerald Plaza, Sector 65,
+                  Gurgaon – 122002, Haryana</li>
+                  <br/>
               <li>+91 9821624222</li>
               <li>+91 7987642268</li>
               <li>Info@aurexfield.com</li>
