@@ -9,6 +9,7 @@ import PropertyGridPage from "./pages/PropertyGridPage";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 import WhatsappButton from "@/components/ui/WhatsappButton";
+import BlogDetail from "@/pages/BlogDetail";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/properties" element={<PropertyGridPage />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/about" element={<About />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

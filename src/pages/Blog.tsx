@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header, { useHeaderMenu } from "@/components/Header";
 import Footer from "@/components/Footer";
 import { MenuToggle } from "@/components/header/MenuToggle";
@@ -8,6 +9,7 @@ import { blogPosts } from "@/data/blogData";
 
 const Blog = () => {
   const { isMenuOpen, toggleMenu, closeMenu } = useHeaderMenu();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const menuToggleDiv = document.createElement("div");
@@ -36,7 +38,11 @@ const Blog = () => {
           {/* Blog Grid */}
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {blogPosts.map((post) => (
-              <BlogCard key={post.id} post={post} />
+              <BlogCard
+                key={post.id}
+                post={post}
+                onReadMore={() => navigate(`/blog/${post.id}`)}
+              />
             ))}
           </div>
         </section>
